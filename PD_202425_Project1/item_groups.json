@@ -1,0 +1,187 @@
+{
+  "Fresh Produce": {
+    "Fruits": [
+      "Fresh Fruit"
+    ],
+    "Vegetables": [
+      "Fresh Vegetables"
+    ]
+  },
+  "Bakery & Breads": {
+    "Bread & Rolls": [
+      "Sliced Bread",
+      "Bagels"
+    ],
+    "Breakfast Bakes": [
+      "Pancakes",
+      "Pancake Mix",
+      "Waffles",
+      "Muffins"
+    ],
+    "Sweet Treats": [
+      "Donuts"
+    ]
+  },
+  "Dairy & Eggs": {
+    "Milk & Cream": [
+      "Milk",
+      "Sour Cream"
+    ],
+    "Cheese": [
+      "Cheese",
+      "Cottage Cheese"
+    ],
+    "Yogurt & Desserts": [
+      "Yogurt",
+      "Ice Cream"
+    ],
+    "Eggs": [
+      "Eggs"
+    ]
+  },
+  "Meat & Seafood": {
+    "Fresh Meats": [
+      "Fresh Chicken",
+      "Hamburger",
+      "Deli Meats"
+    ],
+    "Processed Meats": [
+      "Bologna",
+      "Hot Dogs"
+    ],
+    "Seafood": [
+      "Fresh Fish",
+      "Shrimp",
+      "Clams",
+      "Oysters",
+      "Tuna",
+      "Sardines",
+      "Anchovies"
+    ],
+    "Dried & Cured": [
+      "Dried Meat"
+    ]
+  },
+  "Frozen & Prepared": {
+    "Frozen Sides & Meals": [
+      "Frozen Vegetables",
+      "French Fries",
+      "Frozen Chicken",
+      "TV Dinner",
+      "Pizza"
+    ],
+    "Frozen Desserts & Snacks": [
+      "Ice Cream",
+      "Popsicles"
+    ]
+  },
+  "Pantry Staples": {
+    "Grains & Pasta": [
+      "Rice",
+      "Pasta",
+      "Cereal"
+    ],
+    "Baking & Cooking Essentials": [
+      "Cooking Oil",
+      "Spices",
+      "Pancake Mix",
+      "Sugar"
+    ],
+    "Canned & Preserved": [
+      "Canned Fruit",
+      "Canned Vegetables",
+      "Jam",
+      "Jelly",
+      "Preserves",
+      "Sauces",
+      "Soup"
+    ],
+    "Spreads & Dips": [
+      "Peanut Butter",
+      "Dips",
+      "Deli Salads"
+    ]
+  },
+  "Snacks & Confectionery": {
+    "Savory Snacks": [
+      "Chips",
+      "Crackers",
+      "Popcorn",
+      "Pretzels"
+    ],
+    "Sweet Snacks": [
+      "Cookies",
+      "Chocolate",
+      "Chocolate Candy",
+      "Hard Candy"
+    ],
+    "Dried Fruits & Nuts": [
+      "Dried Fruit",
+      "Nuts"
+    ]
+  },
+  "Beverages": {
+    "Alcoholic": [
+      "Beer",
+      "Wine"
+    ],
+    "Non-Alcoholic": [
+      "Soda",
+      "Juice",
+      "Flavored Drinks",
+      "Coffee"
+    ]
+  },
+  "Health & Personal Care": {
+    "Medicine": [
+      "Aspirin",
+      "Ibuprofen",
+      "Acetominifen",
+      "Cold Remedies",
+      "Nasal Sprays"
+    ],
+    "Oral Care": [
+      "Toothbrushes",
+      "Mouthwash"
+    ],
+    "Hair & Body": [
+      "Shampoo",
+      "Conditioner",
+      "Personal Hygiene",
+      "Deodorizers"
+    ]
+  },
+  "Household & Cleaning": {
+    "Cleaning Supplies": [
+      "Cleaners",
+      "Sponges",
+      "Pot Scrubbers",
+      "Pot Cleaners"
+    ],
+    "Paper & Plastic Goods": [
+      "Paper Dishes",
+      "Paper Wipes",
+      "Plastic Utensils"
+    ],
+    "Maintenance & Tools": [
+      "Lightbulbs",
+      "Batteries",
+      "Screwdrivers",
+      "Tools",
+      "Candles"
+    ]
+  },
+  "Leisure & Miscellaneous": {
+    "Reading Material": [
+      "Auto Magazines",
+      "Computer Magazines",
+      "Fashion Magazines",
+      "Home Magazines",
+      "Sports Magazines"
+    ],
+    "Other": [
+      "Maps",
+      "Sunglasses"
+    ]
+  }
+}
