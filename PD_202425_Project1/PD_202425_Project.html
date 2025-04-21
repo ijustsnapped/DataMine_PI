@@ -18277,9 +18277,10 @@ Measures how often <strong>X</strong> occurs without <strong>Y</strong> (i.e. th
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>A maximal frequent pattern is a frequent item‑set that cannot be extended without falling below the minimum‑support threshold; in other words, it is frequent and <strong>none of its proper supersets is frequent</strong>.</p>
-<p>Maximal patterns form the “outer shell” of the frequent‑itemset lattice, giving the smallest list that still implies every other frequent set: any non‑maximal frequent item‑set must appear as a subset of at least one maximal set.</p>
-<p><ins>Mining maximal patterns therefore compresses the output dramatically, although it sacrifices the exact support information for the subsets that are pruned away.</ins></p>
+<p>A <strong>maximal frequent pattern</strong> is a frequent item‑set that cannot be extended without falling below the minimum‑support threshold. In other words, it is a <strong>frequent itemset that has no frequent superset</strong>.</p>
+<p>While the complete set of frequent itemsets can be exponentially large, maximal itemsets provide a <strong>compact representation</strong> by <ins>storing only the largest patterns that meet the support threshold</ins>.</p>
+<p>Any non-maximal frequent itemset must be a subset of at least one maximal itemset, so the <strong>maximal collection implies all smaller frequent patterns</strong>. (In the output table ahead, that's why we have to compute unions of each of the items of each itemset after)</p>
+<p><ins>Yet, it sacrifices the exact support information for the subsets that are pruned away.</ins></p>
 </div>
 </div>
 </div>
@@ -18288,7 +18289,7 @@ Measures how often <strong>X</strong> occurs without <strong>Y</strong> (i.e. th
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [27]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#  Mine maximal frequent item‑sets at 0.5 % support</span>
@@ -18302,7 +18303,7 @@ Measures how often <strong>X</strong> occurs without <strong>Y</strong> (i.e. th
 
 
 <span class="c1"># Generate rules using the full frequent‑itemset table</span>
-<span class="n">min_conf</span> <span class="o">=</span> <span class="mf">0.15</span>
+<span class="n">min_conf</span> <span class="o">=</span> <span class="mf">0.20</span>
 <span class="n">min_lift</span> <span class="o">=</span> <span class="mf">1.15</span>
 
 <span class="c1"># mine all frequent itemsets at the same support</span>
@@ -18450,7 +18451,7 @@ Measures how often <strong>X</strong> occurs without <strong>Y</strong> (i.e. th
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>
-Rules from maximal itemsets (confidence ≥ 0.15, lift ≥ 1.15): 7
+Rules from maximal itemsets (confidence ≥ 0.20, lift ≥ 1.15): 6
 </pre>
 </div>
 </div>
@@ -18487,18 +18488,7 @@ Rules from maximal itemsets (confidence ≥ 0.15, lift ≥ 1.15): 7
 </thead>
 <tbody>
 <tr>
-<th>110</th>
-<td>(Deli Salads)</td>
-<td>(Cheese)</td>
-<td>0.006787</td>
-<td>472</td>
-<td>0.163718</td>
-<td>1.389269</td>
-<td>0.001902</td>
-<td>1.054854</td>
-</tr>
-<tr>
-<th>38</th>
+<th>21</th>
 <td>(Rice)</td>
 <td>(Fresh Fruit)</td>
 <td>0.006844</td>
@@ -18509,7 +18499,7 @@ Rules from maximal itemsets (confidence ≥ 0.15, lift ≥ 1.15): 7
 <td>1.049936</td>
 </tr>
 <tr>
-<th>106</th>
+<th>63</th>
 <td>(TV Dinner)</td>
 <td>(Fresh Fruit)</td>
 <td>0.008843</td>
@@ -18520,7 +18510,7 @@ Rules from maximal itemsets (confidence ≥ 0.15, lift ≥ 1.15): 7
 <td>1.046004</td>
 </tr>
 <tr>
-<th>2</th>
+<th>1</th>
 <td>(Fresh Fruit, Soup)</td>
 <td>(Fresh Vegetables)</td>
 <td>0.007089</td>
@@ -18531,7 +18521,7 @@ Rules from maximal itemsets (confidence ≥ 0.15, lift ≥ 1.15): 7
 <td>1.085309</td>
 </tr>
 <tr>
-<th>94</th>
+<th>54</th>
 <td>(Mouthwash)</td>
 <td>(Fresh Fruit)</td>
 <td>0.005866</td>
@@ -18542,7 +18532,7 @@ Rules from maximal itemsets (confidence ≥ 0.15, lift ≥ 1.15): 7
 <td>1.043778</td>
 </tr>
 <tr>
-<th>17</th>
+<th>9</th>
 <td>(Hard Candy)</td>
 <td>(Fresh Fruit)</td>
 <td>0.005708</td>
@@ -18553,7 +18543,7 @@ Rules from maximal itemsets (confidence ≥ 0.15, lift ≥ 1.15): 7
 <td>1.040399</td>
 </tr>
 <tr>
-<th>40</th>
+<th>23</th>
 <td>(Flavored Drinks)</td>
 <td>(Fresh Fruit)</td>
 <td>0.008383</td>
@@ -18577,7 +18567,20 @@ Rules from maximal itemsets (confidence ≥ 0.15, lift ≥ 1.15): 7
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Write text in cells like this ...</p>
+<p>At a <strong>0.5% support threshold</strong>, <strong>300 maximal itemsets</strong> were identified—those combinations that cannot be extended without falling below the cutoff.  The three longest patterns each contain <strong>three items</strong> and capture: <strong>(Fresh Fruit, Soup, Fresh Vegetables)</strong> appears in <strong>0.71%</strong> of transactions, while <strong>(Fresh Fruit, Cheese, Fresh Vegetables)</strong> and <strong>(Fresh Fruit, Cookies, Fresh Vegetables)</strong> occur in roughly <strong>0.53%–0.56%</strong> of transactions.</p>
+<p>Two-item maximals such as <strong>(Lightbulbs, Cookies)</strong> or <strong>(Sliced Bread, Cheese)</strong> reveal stable but less obvious pairings; these cross-category links would otherwise be buried among thousands of smaller frequent sets.  By isolating only the maximal patterns, the output shrinks from tens of thousands of item sets down to <strong>300 key combinations</strong>, offering a highly compressed yet semantically rich summary of purchasing behaviour.</p>
+<p>When association rules are generated at <strong>confidence ≥ 20%</strong> and then filtered for <strong>lift ≥ 1.15</strong> within those maximal patterns, only <strong>six associations</strong> remain:</p>
+<ul>
+<li><p>Three single-item antecedents:
+<strong>Rice → Fresh Fruit</strong>, <strong>TV Dinner → Fresh Fruit</strong>, <strong>Mouthwash → Fresh Fruit</strong></p>
+</li>
+<li><p>Two snacks to produce links:
+<strong>Hard Candy → Fresh Fruit</strong>, <strong>Flavored Drinks → Fresh Fruit</strong></p>
+</li>
+</ul>
+<p>It boosts the likelihood of purchasing <strong>Fresh Fruit</strong> by <strong>17%–22%</strong> over random, though <strong>leverage remains at just 0.0009–0.0015</strong> (<ins>one extra co purchase per thousand baskets</ins>).  The standout triadic rule <strong>{Fresh Fruit, Soup} → Fresh Vegetables</strong> achieves <strong>34% confidence</strong> and <strong>lift 1.20</strong> but still adds only <strong>0.0012 leverage</strong>.</p>
+<p>The retained rules all have <strong>lift &gt; 1</strong> and <strong>conviction &gt; 1</strong>, confirming that the antecedent and consequent co occur more often than chance (statistical reliability), but their <strong>leverage</strong> values remain below <strong>0.0015</strong>, meaning each rule yields fewer than two extra co purchases per thousand transactions (modest practical impact), meaning these rules seen <strong>statistically reliable</strong> but <strong>modest in practical impact</strong>.</p>
+<p>Maximal pattern mining shows a <strong>concise, logical foundation</strong>: the largest most stable baskets, while the derived rules pinpoint the clearest cross-sell opportunities.  However, the <strong>low leverage</strong> still present like the prior mined rules suggests that <strong>deeper segmentation</strong> (<ins>e.g., by store type</ins>) to truly see meaningfull associations.</p>
 </div>
 </div>
 </div>
@@ -18599,7 +18602,11 @@ Rules from maximal itemsets (confidence ≥ 0.15, lift ≥ 1.15): 7
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Write text in cells like this ...</p>
+<p>The analysis of <strong>69.549</strong> transactions across <strong>102</strong> products showed that the strongest global signals are simple, high frequency purchases. <strong>Fresh Vegetables</strong> appear in <strong>28.45%</strong> of all baskets and <strong>Fresh Fruit</strong> in <strong>17.53%</strong>, and the only two-itemset exceeding a <strong>5%</strong> support threshold is {Fresh Vegetables, Fresh Fruit} at <strong>5.09%</strong>. Beyond these staples, multi item combinations decay rapidly: only three three itemsets surpass <strong>0.5%</strong> support (for example, {Fresh Vegetables, Fresh Fruit, Soup} at <strong>0.71%</strong>).</p>
+<p>Even our most robust association rule: {Soup, Fresh Fruit} ⇒ Fresh Vegetables—covers just <strong>0.71%</strong> of transactions, yields <strong>34.07%</strong> confidence and <strong>1.197×</strong> lift, and adds roughly one extra co-purchase per <strong>1 000</strong> baskets (leverage ≈ <strong>0.0012</strong>). All rules meeting support ≥ <strong>0.5%</strong>, confidence ≥ <strong>20%</strong> and lift ≥ <strong>1.10</strong> deliver lifts in the <strong>1.10–1.39</strong> range and leverage ≤ <strong>0.002</strong>, indicating limited practical cross-sell potential at the chain level.</p>
+<p>FP Growth proved far more efficient than Apriori under low support thresholds (e.g. <strong>0.92s</strong> vs. <strong>5.6s</strong> at <strong>0.5%</strong> support), letting us explore down to the <strong>0.5%</strong> “elbow point” without prohibitive runtime or memory costs. However, pushing support below <strong>0.5%</strong> triggers exponential itemset growth (3.009 at <strong>0.1%</strong> support) and floods the results with statistically weak, low-evidence/misleading patterns. This engraves the necessity of combined filtering by support, confidence, lift and absolute counts to mitigate noise.</p>
+<p>In aggregate, global pattern mining yields only shallow insights: strong format-specific affinities are diluted when transactions from five distinct store types are pooled (the classic Simpson’s paradox). A support window of <strong>0.5%–1.0%</strong> balanced pattern coverage and manageability, while confidence <strong>20%–30%</strong> and lift <strong>≥ 1.10–1.20</strong> cutoffs focused the rule set on its highest value members. Yet, the <strong>marginal leverage</strong> of even the best rules suggests that chai	n wide cross sell initiatives will see only modest uplift.</p>
+<p>To really uncover higher leverage, context specific associations, we predict that it is necessary to segment the data by store type, like we will do ahead.</p>
 </div>
 </div>
 </div>
