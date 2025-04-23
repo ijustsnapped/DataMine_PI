@@ -18136,15 +18136,63 @@ if (outputEl) {{
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h5 id="1.3.2.1.-Discussing-Results">1.3.2.1. Discussing Results<a class="anchor-link" href="#1.3.2.1.-Discussing-Results">¶</a></h5><p>When the minimum support is <strong>1 %</strong> (about seven hundred baskets) every rule’s lift hovers around <strong>1.1</strong> and, once the lift filter reaches <strong>1.15</strong>, the dataset retains only the symmetric <strong>Soup ↔ Wine</strong> pair—****evidence**** that, at this frequency, co‑purchases are essentially random.</p>
-<p>Lowering the support floor to <strong>0.5 %</strong> (roughly three‑hundred‑fifty baskets) uncovers moderate affinities: lifts climb to about <strong>1.39</strong> and pairs such as <strong>Deli Salads ↔ Cheese</strong> or <strong>Soda ↔ Canned Vegetables</strong> appear, yet raising the lift bar from <strong>1.0</strong> to <strong>1.3</strong> still collapses the rule list from more than three hundred to just two.</p>
-<p>A further drop to <strong>0.3 %</strong> support reveals the genuinely strong global links: <strong>Hot Dogs ↔ Pasta</strong>, <strong>Deli Salads ↔ Juice</strong>, <strong>Waffles ↔ Frozen Chicken</strong> and <strong>Pizza ↔ Ice‑Cream</strong> all exceed a lift of <strong>1.5</strong>, but only four rules survive this threshold, which keeps the output compact. Multi‑item antecedents are virtually absent—only <code>{Soup, Fresh Fruit} → Fresh Vegetables</code> clears support <strong>0.5 %</strong>, because larger combinations quickly fall below any realistic frequency cut‑off.</p>
-<p>Even these best global lift rules have <strong>leverage</strong> of about <strong>0.001–0.002</strong>: not good.</p>
+<h5 id="1.3.2.1.-Discussing-Results">1.3.2.1. Discussing Results<a class="anchor-link" href="#1.3.2.1.-Discussing-Results">¶</a></h5><p>Confidence alone exaggerates rules whose consequents (e.g. <em>Fresh Vegetables</em>, <em>Fresh Fruit</em>) are already common. On the other hand, lift renormalises by the marginals and is therefore the cleanest way to expose genuine over-co-occurrence.<br/>
+Yet lift has an Achilles’ heel: <strong>it falls rapidly when either side of the rule is very frequent</strong> — exactly the case in <strong>Foodmart</strong> where the median single-item support is <strong>2.86%</strong> but the top items reach <strong>28%</strong>.</p>
+<p><strong>Behaviour across support slices</strong></p>
+<table>
+<thead>
+<tr>
+<th>Minimum support</th>
+<th>Rules with <strong>lift ≥ 1.00</strong></th>
+<th>Rules with <strong>lift ≥ 1.20</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>5 %</strong></td>
+<td><em>0 – 2</em> trivial rules</td>
+<td><em>0</em></td>
+</tr>
+<tr>
+<td><strong>1 %</strong></td>
+<td>~<strong>70</strong> rules, lift tops at <strong>1.16</strong></td>
+<td><strong>2</strong> symmetric rules (<em>Soup ↔ Wine</em>)</td>
+</tr>
+<tr>
+<td><strong>0.5 %</strong></td>
+<td><strong>304</strong> rules, lift up to <strong>1.39</strong></td>
+<td><strong>18</strong> rules survive</td>
+</tr>
+<tr>
+<td><strong>0.3 %</strong></td>
+<td><strong>≈900</strong> rules, lift peaks at <strong>1.52</strong></td>
+<td><strong>12</strong> rules at <strong>lift ≥ 1.40</strong></td>
+</tr>
+</tbody>
+</table>
+<p>At high support (5%) only “basket staples” clear the threshold, and staples tend to co-occur almost at chance, so lift ≈ 1.<br/>
+Dropping to 1% brings in moderately popular items, but lift is still capped around <strong>1.16</strong> because those items are too common to create a large over-representation.<br/>
+The first really interesting region is <strong>0.5% – 0.3%</strong>: items appearing in 200-350 baskets are rare enough to yield a visible lift yet still frequent enough to be reliable. This is where rules such as</p>
 <ul>
-<li>The <strong>modest lifts themselves are almost likely the result of pooling transactions from the five very different store formats</strong>. <ins>Strong affinities that hold inside one format are diluted when counts are averaged across all stores, a classical case of <strong>Simpson’s paradox</strong></ins>.</li>
+<li><strong>Deli Salads → Cheese</strong> (lift <strong>1.39</strong>)</li>
+<li><strong>Soda → Canned Vegetables</strong> (lift <strong>1.29</strong>)</li>
 </ul>
-<p><strong>Segmenting the data by store type and re‑mining is probably the only thing able to fix this,</strong></p>
-<p><ins>But for the aggregate dataset a support window of <strong>0.3–0.5%</strong> combined with a lift floor near <strong>1.3</strong> strikes the best balance between statistical stability and managerial usefulness.</ins></p>
+<p>emerge.  Below 0.3 % lift can climb past <strong>1.5</strong>, but the absolute counts drop under 200 and the risk of sampling noise rises sharply.</p>
+<p><strong>Behaviour of our dataset, why are values so low damn...</strong></p>
+<ul>
+<li><strong>Skewed item popularity</strong>. Because two extremely frequent items dominate many baskets, most candidate pairs inherit large denominators in the lift formula, squeezing the ratio towards <strong>1</strong>.</li>
+<li><strong>Short baskets</strong> (median length = <strong>4</strong>). With few items per transaction, the probability that a medium-frequency item meets another specific medium-frequency item is small; lift therefore grows slowly.</li>
+<li><strong>Symmetry &amp; dilution.</strong> When you pool five store formats together, real affinities that are strong in a single format are averaged out (Simpson’s paradox), depressing global lift.</li>
+</ul>
+<p>We have to work knowing this metrics are always relative to the dataset being used. We could also excise the most popular items but that too would cause issues in the validity of the data not really representing the real domain. (we might try that ahead)</p>
+<p><strong>What we will do ahead:</strong></p>
+<ol>
+<li><strong>Support should remain the primary gatekeeper.</strong> In this data a floor around <strong>0.5 %</strong> (≈ 350 baskets) balances statistical power and coverage; lower than <strong>0.3 %</strong> produces many rules whose leverage is &lt; 0.001 (fewer than one extra co-purchase per thousand transactions).</li>
+<li><strong>Lift ≥ 1.2 is a reasonable secondary screen.</strong> It eliminates the “staple with staple” noise while retaining rules with measurable incremental value.</li>
+<li><strong>Confidence is <em>not</em> a helpful discriminator here.</strong> The longest-lived rules (e.g. <em>Hot Dogs → Pasta</em> at support 0.3 %) have confidence only <strong>6 – 8 %</strong> but still beat chance by <strong>50 %</strong> in relative terms. Filtering at confidence &gt; 0.2 would discard them.</li>
+<li><strong>Segmenting by store type is essential.</strong> Many global lifts never exceed <strong>1.4</strong> because heterogeneity dilutes them; mining the <em>Deluxe</em> or <em>Small Grocery</em> subsets separately should expose far stronger local affinities.</li>
+</ol>
+<p><ins><strong>TLDR</strong></ins> In a large, unbalanced retail dataset lift uncovers only modest global associations unless support is allowed to fall near <strong>0.3 %</strong>.  Rely chiefly on a <em>support + lift</em> filter; keep confidence low (≈ 0.10) or omit it, and move to store-specific mining to reveal the truly strong patterns.</p>
 </div>
 </div>
 </div>
@@ -18164,294 +18212,19 @@ if (outputEl) {{
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [105]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [201]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1"># frequent itemsets</span>
-<span class="n">min_sup</span>   <span class="o">=</span> <span class="mf">0.005</span>
+<span class="n">min_sup</span>   <span class="o">=</span> <span class="mf">0.003</span>
 <span class="n">freq_items</span> <span class="o">=</span> <span class="n">fpgrowth</span><span class="p">(</span><span class="n">binary_foodmart</span><span class="p">,</span> <span class="n">min_support</span><span class="o">=</span><span class="n">min_sup</span><span class="p">,</span> <span class="n">use_colnames</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># all rules at confidence ≥ 0.30</span>
-<span class="n">min_conf</span>  <span class="o">=</span> <span class="mf">1.20</span>
-<span class="n">rules</span>     <span class="o">=</span> <span class="n">association_rules</span><span class="p">(</span><span class="n">freq_items</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">"lift"</span><span class="p">,</span> <span class="n">min_threshold</span><span class="o">=</span><span class="n">min_conf</span><span class="p">)</span>
-
-<span class="c1"># Filter for lift ≥ 1.20</span>
-<span class="n">min_lift</span>  <span class="o">=</span> <span class="mf">0.05</span>
-<span class="n">strong_rules</span> <span class="o">=</span> <span class="n">rules</span><span class="p">[</span><span class="n">rules</span><span class="p">[</span><span class="s1">'confidence'</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">min_lift</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-
-<span class="c1"># absolute counts</span>
-<span class="n">strong_rules</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span> <span class="o">=</span> <span class="n">strong_rules</span><span class="p">[</span><span class="s1">'support'</span><span class="p">]</span> <span class="o">*</span> <span class="n">binary_foodmart</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-<span class="n">strong_rules</span> <span class="o">=</span> <span class="n">strong_rules</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">'lift'</span><span class="p">,</span><span class="s1">'confidence'</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">strong_rules</span><span class="p">)</span><span class="si">}</span><span class="s2"> rules with support ≥ </span><span class="si">{</span><span class="n">min_sup</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%, "</span>
-      <span class="sa">f</span><span class="s2">"confidence ≥ </span><span class="si">{</span><span class="n">min_conf</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, lift ≥ </span><span class="si">{</span><span class="n">min_lift</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
-<span class="n">strong_rules</span><span class="p">[[</span>
-    <span class="s1">'antecedents'</span><span class="p">,</span><span class="s1">'consequents'</span><span class="p">,</span>
-    <span class="s1">'support'</span><span class="p">,</span><span class="s1">'count'</span><span class="p">,</span>
-    <span class="s1">'confidence'</span><span class="p">,</span><span class="s1">'lift'</span><span class="p">,</span>
-    <span class="s1">'leverage'</span><span class="p">,</span><span class="s1">'conviction'</span>
-<span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Found 17 rules with support ≥ 0.5%, confidence ≥ 1.20, lift ≥ 0.05
-
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[105]:</div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>antecedents</th>
-<th>consequents</th>
-<th>support</th>
-<th>count</th>
-<th>confidence</th>
-<th>lift</th>
-<th>leverage</th>
-<th>conviction</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>17</th>
-<td>(Deli Salads)</td>
-<td>(Cheese)</td>
-<td>0.006787</td>
-<td>472.0</td>
-<td>0.163718</td>
-<td>1.389269</td>
-<td>0.001902</td>
-<td>1.054854</td>
-</tr>
-<tr>
-<th>16</th>
-<td>(Cheese)</td>
-<td>(Deli Salads)</td>
-<td>0.006787</td>
-<td>472.0</td>
-<td>0.057589</td>
-<td>1.389269</td>
-<td>0.001902</td>
-<td>1.017122</td>
-</tr>
-<tr>
-<th>10</th>
-<td>(Soda)</td>
-<td>(Canned Vegetables)</td>
-<td>0.005320</td>
-<td>370.0</td>
-<td>0.101537</td>
-<td>1.292656</td>
-<td>0.001204</td>
-<td>1.025586</td>
-</tr>
-<tr>
-<th>11</th>
-<td>(Canned Vegetables)</td>
-<td>(Soda)</td>
-<td>0.005320</td>
-<td>370.0</td>
-<td>0.067728</td>
-<td>1.292656</td>
-<td>0.001204</td>
-<td>1.016448</td>
-</tr>
-<tr>
-<th>9</th>
-<td>(Waffles)</td>
-<td>(Canned Vegetables)</td>
-<td>0.005435</td>
-<td>378.0</td>
-<td>0.099500</td>
-<td>1.266725</td>
-<td>0.001144</td>
-<td>1.023266</td>
-</tr>
-<tr>
-<th>8</th>
-<td>(Canned Vegetables)</td>
-<td>(Waffles)</td>
-<td>0.005435</td>
-<td>378.0</td>
-<td>0.069193</td>
-<td>1.266725</td>
-<td>0.001144</td>
-<td>1.015652</td>
-</tr>
-<tr>
-<th>3</th>
-<td>(Eggs)</td>
-<td>(Milk)</td>
-<td>0.005306</td>
-<td>369.0</td>
-<td>0.082810</td>
-<td>1.248230</td>
-<td>0.001055</td>
-<td>1.017955</td>
-</tr>
-<tr>
-<th>2</th>
-<td>(Milk)</td>
-<td>(Eggs)</td>
-<td>0.005306</td>
-<td>369.0</td>
-<td>0.079974</td>
-<td>1.248230</td>
-<td>0.001055</td>
-<td>1.017287</td>
-</tr>
-<tr>
-<th>4</th>
-<td>(Rice)</td>
-<td>(Fresh Fruit)</td>
-<td>0.006844</td>
-<td>476.0</td>
-<td>0.214511</td>
-<td>1.223774</td>
-<td>0.001251</td>
-<td>1.049936</td>
-</tr>
-<tr>
-<th>6</th>
-<td>(Chocolate Candy)</td>
-<td>(Wine)</td>
-<td>0.006585</td>
-<td>458.0</td>
-<td>0.098664</td>
-<td>1.222956</td>
-<td>0.001201</td>
-<td>1.019956</td>
-</tr>
-<tr>
-<th>7</th>
-<td>(Wine)</td>
-<td>(Chocolate Candy)</td>
-<td>0.006585</td>
-<td>458.0</td>
-<td>0.081625</td>
-<td>1.222956</td>
-<td>0.001201</td>
-<td>1.016204</td>
-</tr>
-<tr>
-<th>0</th>
-<td>(Dried Fruit)</td>
-<td>(Jam)</td>
-<td>0.005895</td>
-<td>410.0</td>
-<td>0.050288</td>
-<td>1.215675</td>
-<td>0.001046</td>
-<td>1.009394</td>
-</tr>
-<tr>
-<th>1</th>
-<td>(Jam)</td>
-<td>(Dried Fruit)</td>
-<td>0.005895</td>
-<td>410.0</td>
-<td>0.142510</td>
-<td>1.215675</td>
-<td>0.001046</td>
-<td>1.029485</td>
-</tr>
-<tr>
-<th>13</th>
-<td>(TV Dinner)</td>
-<td>(Fresh Fruit)</td>
-<td>0.008843</td>
-<td>615.0</td>
-<td>0.211558</td>
-<td>1.206929</td>
-<td>0.001516</td>
-<td>1.046004</td>
-</tr>
-<tr>
-<th>12</th>
-<td>(Fresh Fruit)</td>
-<td>(TV Dinner)</td>
-<td>0.008843</td>
-<td>615.0</td>
-<td>0.050447</td>
-<td>1.206929</td>
-<td>0.001516</td>
-<td>1.009109</td>
-</tr>
-<tr>
-<th>14</th>
-<td>(Nuts)</td>
-<td>(Frozen Vegetables)</td>
-<td>0.005536</td>
-<td>385.0</td>
-<td>0.082406</td>
-<td>1.205816</td>
-<td>0.000945</td>
-<td>1.015329</td>
-</tr>
-<tr>
-<th>15</th>
-<td>(Frozen Vegetables)</td>
-<td>(Nuts)</td>
-<td>0.005536</td>
-<td>385.0</td>
-<td>0.081001</td>
-<td>1.205816</td>
-<td>0.000945</td>
-<td>1.015044</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [100]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># frequent itemsets</span>
-<span class="n">min_sup</span>   <span class="o">=</span> <span class="mf">0.005</span>
-<span class="n">freq_items</span> <span class="o">=</span> <span class="n">fpgrowth</span><span class="p">(</span><span class="n">binary_foodmart</span><span class="p">,</span> <span class="n">min_support</span><span class="o">=</span><span class="n">min_sup</span><span class="p">,</span> <span class="n">use_colnames</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1"># all rules at confidence ≥ 0.30</span>
-<span class="n">min_conf</span>  <span class="o">=</span> <span class="mf">0.10</span>
+<span class="c1"># confidence</span>
+<span class="n">min_conf</span>  <span class="o">=</span> <span class="mf">0.06</span>
 <span class="n">rules</span>     <span class="o">=</span> <span class="n">association_rules</span><span class="p">(</span><span class="n">freq_items</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">"confidence"</span><span class="p">,</span> <span class="n">min_threshold</span><span class="o">=</span><span class="n">min_conf</span><span class="p">)</span>
 
 <span class="c1"># Filter for lift ≥ 1.20</span>
-<span class="n">min_lift</span>  <span class="o">=</span> <span class="mf">1.20</span>
+<span class="n">min_lift</span>  <span class="o">=</span> <span class="mf">1.3</span>
 <span class="n">strong_rules</span> <span class="o">=</span> <span class="n">rules</span><span class="p">[</span><span class="n">rules</span><span class="p">[</span><span class="s1">'lift'</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">min_lift</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
 <span class="c1"># absolute counts</span>
@@ -18465,7 +18238,7 @@ if (outputEl) {{
     <span class="s1">'support'</span><span class="p">,</span><span class="s1">'count'</span><span class="p">,</span>
     <span class="s1">'confidence'</span><span class="p">,</span><span class="s1">'lift'</span><span class="p">,</span>
     <span class="s1">'leverage'</span><span class="p">,</span><span class="s1">'conviction'</span>
-<span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -18478,13 +18251,13 @@ if (outputEl) {{
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Found 5 rules with support ≥ 0.5%, confidence ≥ 0.10, lift ≥ 1.20
+<pre>Found 22 rules with support ≥ 0.3%, confidence ≥ 0.06, lift ≥ 1.30
 
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[100]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[201]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -18516,7 +18289,128 @@ if (outputEl) {{
 </thead>
 <tbody>
 <tr>
-<th>228</th>
+<th>310</th>
+<td>(Hot Dogs)</td>
+<td>(Pasta)</td>
+<td>0.003034</td>
+<td>211.0</td>
+<td>0.075036</td>
+<td>1.524583</td>
+<td>0.001044</td>
+<td>1.027913</td>
+</tr>
+<tr>
+<th>309</th>
+<td>(Pasta)</td>
+<td>(Hot Dogs)</td>
+<td>0.003034</td>
+<td>211.0</td>
+<td>0.061642</td>
+<td>1.524583</td>
+<td>0.001044</td>
+<td>1.022603</td>
+</tr>
+<tr>
+<th>774</th>
+<td>(Deli Salads)</td>
+<td>(Juice)</td>
+<td>0.003379</td>
+<td>235.0</td>
+<td>0.081512</td>
+<td>1.518238</td>
+<td>0.001153</td>
+<td>1.030293</td>
+</tr>
+<tr>
+<th>773</th>
+<td>(Juice)</td>
+<td>(Deli Salads)</td>
+<td>0.003379</td>
+<td>235.0</td>
+<td>0.062935</td>
+<td>1.518238</td>
+<td>0.001153</td>
+<td>1.022925</td>
+</tr>
+<tr>
+<th>705</th>
+<td>(Waffles)</td>
+<td>(Frozen Chicken)</td>
+<td>0.003321</td>
+<td>231.0</td>
+<td>0.060805</td>
+<td>1.490120</td>
+<td>0.001092</td>
+<td>1.021295</td>
+</tr>
+<tr>
+<th>704</th>
+<td>(Frozen Chicken)</td>
+<td>(Waffles)</td>
+<td>0.003321</td>
+<td>231.0</td>
+<td>0.081395</td>
+<td>1.490120</td>
+<td>0.001092</td>
+<td>1.029144</td>
+</tr>
+<tr>
+<th>636</th>
+<td>(Pizza)</td>
+<td>(Ice Cream)</td>
+<td>0.003393</td>
+<td>236.0</td>
+<td>0.062783</td>
+<td>1.477655</td>
+<td>0.001097</td>
+<td>1.021654</td>
+</tr>
+<tr>
+<th>635</th>
+<td>(Ice Cream)</td>
+<td>(Pizza)</td>
+<td>0.003393</td>
+<td>236.0</td>
+<td>0.079865</td>
+<td>1.477655</td>
+<td>0.001097</td>
+<td>1.028057</td>
+</tr>
+<tr>
+<th>779</th>
+<td>(Deli Salads)</td>
+<td>(Pizza)</td>
+<td>0.003264</td>
+<td>227.0</td>
+<td>0.078737</td>
+<td>1.456799</td>
+<td>0.001023</td>
+<td>1.026799</td>
+</tr>
+<tr>
+<th>778</th>
+<td>(Pizza)</td>
+<td>(Deli Salads)</td>
+<td>0.003264</td>
+<td>227.0</td>
+<td>0.060388</td>
+<td>1.456799</td>
+<td>0.001023</td>
+<td>1.020153</td>
+</tr>
+<tr>
+<th>173</th>
+<td>(Cleaners)</td>
+<td>(Chocolate Candy)</td>
+<td>0.003796</td>
+<td>264.0</td>
+<td>0.095376</td>
+<td>1.428972</td>
+<td>0.001140</td>
+<td>1.031650</td>
+</tr>
+<tr>
+<th>775</th>
 <td>(Deli Salads)</td>
 <td>(Cheese)</td>
 <td>0.006787</td>
@@ -18527,48 +18421,114 @@ if (outputEl) {{
 <td>1.054854</td>
 </tr>
 <tr>
-<th>153</th>
-<td>(Soda)</td>
+<th>838</th>
+<td>(Canned Fruit)</td>
 <td>(Canned Vegetables)</td>
-<td>0.005320</td>
-<td>370.0</td>
-<td>0.101537</td>
-<td>1.292656</td>
-<td>0.001204</td>
-<td>1.025586</td>
+<td>0.003063</td>
+<td>213.0</td>
+<td>0.109119</td>
+<td>1.389183</td>
+<td>0.000858</td>
+<td>1.034314</td>
 </tr>
 <tr>
-<th>80</th>
-<td>(Rice)</td>
-<td>(Fresh Fruit)</td>
-<td>0.006844</td>
-<td>476.0</td>
-<td>0.214511</td>
-<td>1.223774</td>
-<td>0.001251</td>
-<td>1.049936</td>
+<th>784</th>
+<td>(Deli Salads)</td>
+<td>(Chips)</td>
+<td>0.003710</td>
+<td>258.0</td>
+<td>0.089490</td>
+<td>1.382178</td>
+<td>0.001026</td>
+<td>1.027176</td>
 </tr>
 <tr>
-<th>31</th>
-<td>(Jam)</td>
-<td>(Dried Fruit)</td>
-<td>0.005895</td>
-<td>410.0</td>
-<td>0.142510</td>
-<td>1.215675</td>
-<td>0.001046</td>
-<td>1.029485</td>
+<th>783</th>
+<td>(Deli Salads)</td>
+<td>(Sliced Bread)</td>
+<td>0.003178</td>
+<td>221.0</td>
+<td>0.076656</td>
+<td>1.361084</td>
+<td>0.000843</td>
+<td>1.022025</td>
 </tr>
 <tr>
-<th>220</th>
-<td>(TV Dinner)</td>
-<td>(Fresh Fruit)</td>
-<td>0.008843</td>
-<td>615.0</td>
-<td>0.211558</td>
-<td>1.206929</td>
-<td>0.001516</td>
-<td>1.046004</td>
+<th>867</th>
+<td>(Cold Remedies)</td>
+<td>(Canned Vegetables)</td>
+<td>0.003034</td>
+<td>211.0</td>
+<td>0.104767</td>
+<td>1.333775</td>
+<td>0.000759</td>
+<td>1.029286</td>
+</tr>
+<tr>
+<th>511</th>
+<td>(Soda)</td>
+<td>(Chocolate Candy)</td>
+<td>0.004630</td>
+<td>322.0</td>
+<td>0.088364</td>
+<td>1.323925</td>
+<td>0.001133</td>
+<td>1.023716</td>
+</tr>
+<tr>
+<th>512</th>
+<td>(Chocolate Candy)</td>
+<td>(Soda)</td>
+<td>0.004630</td>
+<td>322.0</td>
+<td>0.069367</td>
+<td>1.323925</td>
+<td>0.001133</td>
+<td>1.018237</td>
+</tr>
+<tr>
+<th>786</th>
+<td>(Deli Salads)</td>
+<td>(Dips)</td>
+<td>0.003005</td>
+<td>209.0</td>
+<td>0.072494</td>
+<td>1.321247</td>
+<td>0.000731</td>
+<td>1.019004</td>
+</tr>
+<tr>
+<th>508</th>
+<td>(Nuts)</td>
+<td>(Soda)</td>
+<td>0.004630</td>
+<td>322.0</td>
+<td>0.068921</td>
+<td>1.315423</td>
+<td>0.001110</td>
+<td>1.017750</td>
+</tr>
+<tr>
+<th>507</th>
+<td>(Soda)</td>
+<td>(Nuts)</td>
+<td>0.004630</td>
+<td>322.0</td>
+<td>0.088364</td>
+<td>1.315423</td>
+<td>0.001110</td>
+<td>1.023243</td>
+</tr>
+<tr>
+<th>709</th>
+<td>(Frozen Chicken)</td>
+<td>(Frozen Vegetables)</td>
+<td>0.003652</td>
+<td>254.0</td>
+<td>0.089500</td>
+<td>1.309617</td>
+<td>0.000863</td>
+<td>1.023239</td>
 </tr>
 </tbody>
 </table>
@@ -18582,7 +18542,7 @@ if (outputEl) {{
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [49]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [202]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">rules_05</span>   <span class="o">=</span> <span class="n">generate_rules</span><span class="p">(</span><span class="n">binary_foodmart</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">'leverage'</span><span class="p">,</span> <span class="n">min_threshold</span><span class="o">=</span><span class="mf">0.0018</span><span class="p">)</span>
@@ -18605,7 +18565,7 @@ if (outputEl) {{
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[49]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[202]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -18638,17 +18598,6 @@ if (outputEl) {{
 <tbody>
 <tr>
 <th>2</th>
-<td>(Deli Salads)</td>
-<td>(Cheese)</td>
-<td>0.006787</td>
-<td>472.0</td>
-<td>0.163718</td>
-<td>1.389269</td>
-<td>0.001902</td>
-<td>1.054854</td>
-</tr>
-<tr>
-<th>3</th>
 <td>(Cheese)</td>
 <td>(Deli Salads)</td>
 <td>0.006787</td>
@@ -18657,6 +18606,17 @@ if (outputEl) {{
 <td>1.389269</td>
 <td>0.001902</td>
 <td>1.017122</td>
+</tr>
+<tr>
+<th>3</th>
+<td>(Deli Salads)</td>
+<td>(Cheese)</td>
+<td>0.006787</td>
+<td>472.0</td>
+<td>0.163718</td>
+<td>1.389269</td>
+<td>0.001902</td>
+<td>1.054854</td>
 </tr>
 <tr>
 <th>0</th>
@@ -18692,7 +18652,7 @@ if (outputEl) {{
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [55]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [203]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">rules_05</span>   <span class="o">=</span> <span class="n">generate_rules</span><span class="p">(</span><span class="n">binary_foodmart</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">'conviction'</span><span class="p">,</span> <span class="n">min_threshold</span><span class="o">=</span><span class="mf">1.05</span><span class="p">)</span>
@@ -18715,7 +18675,7 @@ if (outputEl) {{
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[55]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[203]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -18759,7 +18719,7 @@ if (outputEl) {{
 </tr>
 <tr>
 <th>0</th>
-<td>(Fresh Fruit, Soup)</td>
+<td>(Soup, Fresh Fruit)</td>
 <td>(Fresh Vegetables)</td>
 <td>0.007089</td>
 <td>493.0</td>
@@ -18786,6 +18746,304 @@ if (outputEl) {{
 </div>
 </div>
 </div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [204]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">enrich_rules</span><span class="p">(</span><span class="n">rules</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">n_transactions</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""</span>
+<span class="sd">    Given the `rules` DataFrame produced by `mlxtend.frequent_patterns.association_rules`</span>
+<span class="sd">    and the total number of transactions in the market-basket matrix (`n_transactions`),</span>
+<span class="sd">    add columns that make the numeric meaning of *leverage* and *conviction* explicit.</span>
+
+<span class="sd">    New columns</span>
+<span class="sd">    -----------</span>
+<span class="sd">    exp_support   : expected P(A∪B) under independence  = support(A) · support(B)</span>
+<span class="sd">    rel_gain_pct  : relative gain of the pair vs. chance = leverage / exp_support  (in %)</span>
+<span class="sd">    extra_pairs   : absolute # of 'extra' co-occurrences = leverage · n_transactions</span>
+<span class="sd">    """</span>
+
+    <span class="c1"># expected joint probability if A and B were independent</span>
+    <span class="n">rules</span><span class="p">[</span><span class="s2">"exp_support"</span><span class="p">]</span> <span class="o">=</span> <span class="n">rules</span><span class="p">[</span><span class="s2">"support"</span><span class="p">]</span> <span class="o">/</span> <span class="n">rules</span><span class="p">[</span><span class="s2">"lift"</span><span class="p">]</span>
+
+    <span class="c1"># leverage is already support - expected; convert it to a % elevation</span>
+    <span class="n">rules</span><span class="p">[</span><span class="s2">"rel_gain_pct"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rules</span><span class="p">[</span><span class="s2">"leverage"</span><span class="p">]</span> <span class="o">/</span> <span class="n">rules</span><span class="p">[</span><span class="s2">"exp_support"</span><span class="p">])</span> <span class="o">*</span> <span class="mi">100</span>
+
+    <span class="c1"># convert leverage into absolute counts ("how many baskets above random?")</span>
+    <span class="n">rules</span><span class="p">[</span><span class="s2">"extra_pairs"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rules</span><span class="p">[</span><span class="s2">"leverage"</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_transactions</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1"># prettier ordering of columns</span>
+    <span class="n">extra_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"exp_support"</span><span class="p">,</span> <span class="s2">"rel_gain_pct"</span><span class="p">,</span> <span class="s2">"extra_pairs"</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">rules</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">rules</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">+</span> <span class="n">extra_cols</span><span class="p">]</span>
+
+
+<span class="c1"># ------------------------------------------------------------</span>
+<span class="c1"># Example: apply to a rule table called `strong_rules`</span>
+<span class="c1"># produced earlier with mlxtend.</span>
+<span class="c1"># ------------------------------------------------------------</span>
+<span class="c1"># ▶ total number of baskets AFTER any filtering (e.g. after dropping produce)</span>
+<span class="n">n_baskets</span> <span class="o">=</span> <span class="mi">68_624</span>          <span class="c1"># &lt;-- replace with `binary_df.shape[0]` for your data</span>
+
+<span class="c1"># enrich and sort for demonstration</span>
+<span class="n">rules_pretty</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">enrich_rules</span><span class="p">(</span><span class="n">strong_rules</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">n_baskets</span><span class="p">)</span>
+      <span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s2">"lift"</span><span class="p">,</span> <span class="s2">"confidence"</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+      <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># show the top 10 rules with the new interpretability columns</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s2">"display.float_format"</span><span class="p">,</span> <span class="s2">"</span><span class="si">{:,.6f}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">rules_pretty</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>antecedents</th>
+<th>consequents</th>
+<th>antecedent support</th>
+<th>consequent support</th>
+<th>support</th>
+<th>confidence</th>
+<th>lift</th>
+<th>leverage</th>
+<th>conviction</th>
+<th>count</th>
+<th>exp_support</th>
+<th>rel_gain_pct</th>
+<th>extra_pairs</th>
+<th>exp_support</th>
+<th>rel_gain_pct</th>
+<th>extra_pairs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>(Hot Dogs)</td>
+<td>(Pasta)</td>
+<td>0.040432</td>
+<td>0.049217</td>
+<td>0.003034</td>
+<td>0.075036</td>
+<td>1.524583</td>
+<td>0.001044</td>
+<td>1.027913</td>
+<td>211.000000</td>
+<td>0.001990</td>
+<td>52.458320</td>
+<td>72</td>
+<td>0.001990</td>
+<td>52.458320</td>
+<td>72</td>
+</tr>
+<tr>
+<th>1</th>
+<td>(Pasta)</td>
+<td>(Hot Dogs)</td>
+<td>0.049217</td>
+<td>0.040432</td>
+<td>0.003034</td>
+<td>0.061642</td>
+<td>1.524583</td>
+<td>0.001044</td>
+<td>1.022603</td>
+<td>211.000000</td>
+<td>0.001990</td>
+<td>52.458320</td>
+<td>72</td>
+<td>0.001990</td>
+<td>52.458320</td>
+<td>72</td>
+</tr>
+<tr>
+<th>2</th>
+<td>(Deli Salads)</td>
+<td>(Juice)</td>
+<td>0.041453</td>
+<td>0.053689</td>
+<td>0.003379</td>
+<td>0.081512</td>
+<td>1.518238</td>
+<td>0.001153</td>
+<td>1.030293</td>
+<td>235.000000</td>
+<td>0.002226</td>
+<td>51.823779</td>
+<td>79</td>
+<td>0.002226</td>
+<td>51.823779</td>
+<td>79</td>
+</tr>
+<tr>
+<th>3</th>
+<td>(Juice)</td>
+<td>(Deli Salads)</td>
+<td>0.053689</td>
+<td>0.041453</td>
+<td>0.003379</td>
+<td>0.062935</td>
+<td>1.518238</td>
+<td>0.001153</td>
+<td>1.022925</td>
+<td>235.000000</td>
+<td>0.002226</td>
+<td>51.823779</td>
+<td>79</td>
+<td>0.002226</td>
+<td>51.823779</td>
+<td>79</td>
+</tr>
+<tr>
+<th>4</th>
+<td>(Waffles)</td>
+<td>(Frozen Chicken)</td>
+<td>0.054623</td>
+<td>0.040806</td>
+<td>0.003321</td>
+<td>0.060805</td>
+<td>1.490120</td>
+<td>0.001092</td>
+<td>1.021295</td>
+<td>231.000000</td>
+<td>0.002229</td>
+<td>49.011980</td>
+<td>75</td>
+<td>0.002229</td>
+<td>49.011980</td>
+<td>75</td>
+</tr>
+<tr>
+<th>5</th>
+<td>(Frozen Chicken)</td>
+<td>(Waffles)</td>
+<td>0.040806</td>
+<td>0.054623</td>
+<td>0.003321</td>
+<td>0.081395</td>
+<td>1.490120</td>
+<td>0.001092</td>
+<td>1.029144</td>
+<td>231.000000</td>
+<td>0.002229</td>
+<td>49.011980</td>
+<td>75</td>
+<td>0.002229</td>
+<td>49.011980</td>
+<td>75</td>
+</tr>
+<tr>
+<th>6</th>
+<td>(Pizza)</td>
+<td>(Ice Cream)</td>
+<td>0.054048</td>
+<td>0.042488</td>
+<td>0.003393</td>
+<td>0.062783</td>
+<td>1.477655</td>
+<td>0.001097</td>
+<td>1.021654</td>
+<td>236.000000</td>
+<td>0.002296</td>
+<td>47.765512</td>
+<td>75</td>
+<td>0.002296</td>
+<td>47.765512</td>
+<td>75</td>
+</tr>
+<tr>
+<th>7</th>
+<td>(Ice Cream)</td>
+<td>(Pizza)</td>
+<td>0.042488</td>
+<td>0.054048</td>
+<td>0.003393</td>
+<td>0.079865</td>
+<td>1.477655</td>
+<td>0.001097</td>
+<td>1.028057</td>
+<td>236.000000</td>
+<td>0.002296</td>
+<td>47.765512</td>
+<td>75</td>
+<td>0.002296</td>
+<td>47.765512</td>
+<td>75</td>
+</tr>
+<tr>
+<th>8</th>
+<td>(Deli Salads)</td>
+<td>(Pizza)</td>
+<td>0.041453</td>
+<td>0.054048</td>
+<td>0.003264</td>
+<td>0.078737</td>
+<td>1.456799</td>
+<td>0.001023</td>
+<td>1.026799</td>
+<td>227.000000</td>
+<td>0.002240</td>
+<td>45.679948</td>
+<td>70</td>
+<td>0.002240</td>
+<td>45.679948</td>
+<td>70</td>
+</tr>
+<tr>
+<th>9</th>
+<td>(Pizza)</td>
+<td>(Deli Salads)</td>
+<td>0.054048</td>
+<td>0.041453</td>
+<td>0.003264</td>
+<td>0.060388</td>
+<td>1.456799</td>
+<td>0.001023</td>
+<td>1.020153</td>
+<td>227.000000</td>
+<td>0.002240</td>
+<td>45.679948</td>
+<td>70</td>
+<td>0.002240</td>
+<td>45.679948</td>
+<td>70</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
@@ -18793,7 +19051,202 @@ if (outputEl) {{
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h5 id="1.3.3.1.-Discussing-Results">1.3.3.1. Discussing Results<a class="anchor-link" href="#1.3.3.1.-Discussing-Results">¶</a></h5>
+<p><em><strong>TEST REMOVING TOP ITEMS</strong></em></p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Drop the two dominant items</span>
+<span class="n">cols_to_drop</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Fresh Vegetables'</span><span class="p">,</span> <span class="s1">'Fresh Fruit'</span><span class="p">]</span>
+<span class="n">df_stripped</span>   <span class="o">=</span> <span class="n">binary_foodmart</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">cols_to_drop</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s1">'ignore'</span><span class="p">)</span>
+
+<span class="c1"># Remove transactions that became empty after the drop</span>
+<span class="n">mask_non_empty</span>   <span class="o">=</span> <span class="n">df_stripped</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>          <span class="c1"># at least one “True”</span>
+<span class="n">df_stripped</span>      <span class="o">=</span> <span class="n">df_stripped</span><span class="p">[</span><span class="n">mask_non_empty</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># quick sanity-check</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Shape after cleaning : </span><span class="si">{</span><span class="n">df_stripped</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Empty-basket rows    : </span><span class="si">{</span><span class="p">(</span><span class="n">df_stripped</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Shape after cleaning : (68624, 100)
+Empty-basket rows    : 0
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># frequent itemsets</span>
+<span class="n">min_sup</span>   <span class="o">=</span> <span class="mf">0.003</span>
+<span class="n">freq_items</span> <span class="o">=</span> <span class="n">fpgrowth</span><span class="p">(</span><span class="n">df_stripped</span><span class="p">,</span> <span class="n">min_support</span><span class="o">=</span><span class="n">min_sup</span><span class="p">,</span> <span class="n">use_colnames</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># confidence</span>
+<span class="n">min_conf</span>  <span class="o">=</span> <span class="mf">0.06</span>
+<span class="n">rules</span>     <span class="o">=</span> <span class="n">association_rules</span><span class="p">(</span><span class="n">freq_items</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s2">"confidence"</span><span class="p">,</span> <span class="n">min_threshold</span><span class="o">=</span><span class="n">min_conf</span><span class="p">)</span>
+
+<span class="c1"># Filter for lift ≥ 1.20</span>
+<span class="n">min_lift</span>  <span class="o">=</span> <span class="mf">1.3</span>
+<span class="n">strong_rules</span> <span class="o">=</span> <span class="n">rules</span><span class="p">[</span><span class="n">rules</span><span class="p">[</span><span class="s1">'lift'</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">min_lift</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># absolute counts</span>
+<span class="n">strong_rules</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span> <span class="o">=</span> <span class="n">strong_rules</span><span class="p">[</span><span class="s1">'support'</span><span class="p">]</span> <span class="o">*</span> <span class="n">df_stripped</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">strong_rules</span> <span class="o">=</span> <span class="n">strong_rules</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">'lift'</span><span class="p">,</span><span class="s1">'confidence'</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">strong_rules</span><span class="p">)</span><span class="si">}</span><span class="s2"> rules with support ≥ </span><span class="si">{</span><span class="n">min_sup</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%, "</span>
+      <span class="sa">f</span><span class="s2">"confidence ≥ </span><span class="si">{</span><span class="n">min_conf</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, lift ≥ </span><span class="si">{</span><span class="n">min_lift</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">strong_rules</span><span class="p">[[</span>
+    <span class="s1">'antecedents'</span><span class="p">,</span><span class="s1">'consequents'</span><span class="p">,</span>
+    <span class="s1">'support'</span><span class="p">,</span><span class="s1">'count'</span><span class="p">,</span>
+    <span class="s1">'confidence'</span><span class="p">,</span><span class="s1">'lift'</span><span class="p">,</span>
+    <span class="s1">'leverage'</span><span class="p">,</span><span class="s1">'conviction'</span>
+<span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Found 3 rules with support ≥ 0.3%, confidence ≥ 0.10, lift ≥ 1.30
+
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>antecedents</th>
+<th>consequents</th>
+<th>support</th>
+<th>count</th>
+<th>confidence</th>
+<th>lift</th>
+<th>leverage</th>
+<th>conviction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>166</th>
+<td>(Deli Salads)</td>
+<td>(Cheese)</td>
+<td>0.006878</td>
+<td>472.000000</td>
+<td>0.163718</td>
+<td>1.370792</td>
+<td>0.001860</td>
+<td>1.052955</td>
+</tr>
+<tr>
+<th>184</th>
+<td>(Canned Fruit)</td>
+<td>(Canned Vegetables)</td>
+<td>0.003104</td>
+<td>213.000000</td>
+<td>0.109119</td>
+<td>1.370707</td>
+<td>0.000839</td>
+<td>1.033126</td>
+</tr>
+<tr>
+<th>191</th>
+<td>(Cold Remedies)</td>
+<td>(Canned Vegetables)</td>
+<td>0.003075</td>
+<td>211.000000</td>
+<td>0.104767</td>
+<td>1.316036</td>
+<td>0.000738</td>
+<td>1.028103</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [200]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># If you want to double-check quickly:</span>
+<span class="n">before</span> <span class="o">=</span> <span class="mi">69549</span>
+<span class="n">after</span>  <span class="o">=</span> <span class="mi">68624</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Basket loss : </span><span class="si">{</span><span class="p">(</span><span class="n">before</span><span class="o">-</span><span class="n">after</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">  (</span><span class="si">{</span><span class="p">(</span><span class="n">before</span><span class="o">-</span><span class="n">after</span><span class="p">)</span><span class="o">/</span><span class="n">before</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+
+<span class="n">before_rules</span> <span class="o">=</span> <span class="mi">22</span>
+<span class="n">after_rules</span>  <span class="o">=</span> <span class="mi">20</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Rule loss   : </span><span class="si">{</span><span class="n">before_rules</span><span class="o">-</span><span class="n">after_rules</span><span class="si">}</span><span class="s2">  "</span>
+      <span class="sa">f</span><span class="s2">"(</span><span class="si">{</span><span class="p">(</span><span class="n">before_rules</span><span class="o">-</span><span class="n">after_rules</span><span class="p">)</span><span class="o">/</span><span class="n">before_rules</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Basket loss : 925  (1.33%)
+Rule loss   : 2  (9.09%)
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -18839,14 +19292,75 @@ Measures how often <strong>X</strong> occurs without <strong>Y</strong> (i.e. th
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Applying the <strong>joint filter</strong> (<ins>support ≥ 0.5 %, confidence ≥ 20 %, lift ≥ 1.20</ins>) collapses the rule‑set to only two associations:</p>
+<h5 id="1.3.3.1.-Discussing-Results">1.3.3.1. Discussing Results<a class="anchor-link" href="#1.3.3.1.-Discussing-Results">¶</a></h5>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <ul>
-<li><code>Rice → Fresh Fruit</code></li>
-<li>and <code>TV Dinner → Fresh Fruit</code>.</li>
+<li><strong>22 rules</strong> survive the triple filter <strong>support ≥ 0.30%</strong>, <strong>confidence ≥ 0.06</strong>, <strong>lift ≥ 1.30</strong>.</li>
+<li><strong>Counts</strong> run from <strong>211 – 472 baskets</strong> (≈ 0.30–0.69% of the 69 549 transactions).</li>
+<li><strong>Lift</strong> peaks at <strong>1.52</strong> and bottoms at <strong>1.31</strong> – well above independence (1.0) but far from “basket-lock” strength (&gt; 2).</li>
+<li><strong>Confidence</strong> sits between <strong>6% and 16%</strong>: modest, yet respectable given the average basket holds only four items.</li>
+<li><strong>Leverage</strong> hovers around <strong>0.001 ± 0.0003</strong>; conviction around <strong>1.02–1.05</strong>. It's typical for sparse, low-overlap data and tells us the rules add incremental (not transformational) predictive power.</li>
 </ul>
-<p>Both satisfy the statistical criteria—their supports hover around <strong>0.7–0.9%</strong> (210–615 baskets), confidence is slightly above one purchase in five, and lift shows that Fresh Fruit is chosen about <strong>20%</strong> more often than random when these antecedents are present.</p>
-<p>Yet the effect size remains <em><strong>modest</strong></em>: <ins>leverage is just 0.0013–0.0015</ins>, meaning each rule contributes roughly one extra Fresh‑Fruit sale per thousand baskets. Because <strong>Fresh Fruit</strong> is THE SECOND MOST POPULAR item, the rules mostly reflect its base popularity rather than a uniquely strong tie to Rice or TV Dinners.</p>
-<p>Like previously stated segmenting the data by <strong>store type</strong> is likely the only way to improve this, where <ins>context‑specific affinities</ins> may surface with both higher lift and leverage.</p>
+<p><strong>Rules we got rules that seem valid in real world scenarios</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Most-lifted pair</th>
+<th>Intuition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hot Dogs ⇆ Pasta</strong> (lift 1.52)</td>
+<td><em>quick-meal</em> aisle and share a “family-dinner-in-a-hurry” mission. Hot dogs with pasta combo</td>
+</tr>
+<tr>
+<td><strong>Deli Salads ⇆ Juice / Pizza / Chips / Sliced Bread / Cheese</strong> (five separate rules, lift 1.36–1.52)</td>
+<td><em>Deli Salads</em> act as a picnic / snacking hub that attracts multiple complements; every consequent is grab-and-go</td>
+</tr>
+<tr>
+<td><strong>Waffles ⇆ Frozen Chicken</strong> (lift 1.49)</td>
+<td>Classic “chicken-and-waffles” comfort combo.</td>
+</tr>
+<tr>
+<td><strong>Pizza ⇆ Ice-Cream</strong> (lift 1.48)</td>
+<td>Weekend movie-night basket. Also dope combo.</td>
+</tr>
+<tr>
+<td><strong>Cleaners → Chocolate Candy</strong> (lift 1.43, confidence 9.5 %)</td>
+<td>No idea maybe getting a sweet treat to comfort after tidying up their home. Maybe related to impulse buying, item quantity would probably help.</td>
+</tr>
+<tr>
+<td><strong>Canned-Fruit → Canned-Vegetables</strong> &amp; <strong>Cold-Remedies → Canned-Vegetables</strong></td>
+<td>Pantry-stocking behaviour; when shoppers buy shelf-stable fruit or cold medicine they also grab veggies.</td>
+</tr>
+<tr>
+<td><strong>Nuts ⇆ Soda</strong></td>
+<td>Salty snack + carbonated drink pairing.</td>
+</tr>
+</tbody>
+</table>
+<p><em><strong>Symmetry is important!!!</strong></em> 10 of the 22 rules appear in both directions (A → B and B → A). That symmetry, plus similar confidence values, shows the relationships are <em>co-selection</em> rather than true causality.</p>
+<p><strong>Why leverage &amp; conviction look tiny</strong>
+Leverage is an <em>absolute</em> difference (≈ 0.001 = 0.1 %), so even “good” rules feel numerically small in a 0 – 1 range. The presented values are roughly <strong>100–200 % above random expectation</strong> (e.g., 0.0010 vs 0.0005 baseline), making them meaningful that is meaningful.<br/>
+Conviction barely exceeds one because confidence never approaches unity in four-item baskets; conviction &gt; 1 nevertheless confirms the rules fail less often than independence would predict, so our rules are still valid.</p>
+<p>When you mined directly on <strong>leverage ≥ 0.0018</strong> you got only <strong>4 rules</strong>. Essentially the same <em>Deli-Salads ⇆ Cheese</em> pair plus a <em>Fresh-Veg ⇆ Dried-Fruit</em> artefact (high frequency, low lift). A <strong>conviction ≥ 1.05</strong> cut retained 3 rules and again highlighted <em>Deli-Salads → Cheese</em>.<br/>
+Again this reinforces that sparse grocery data, leverage/conviction are much stricter than lift, they isolate <em>one or two flagship affinities</em> rather than a portfolio of cross-sell ideas.</p>
+<h5 id="Why-we-think-the-thresholds-sensible">Why we think the thresholds sensible<a class="anchor-link" href="#Why-we-think-the-thresholds-sensible">¶</a></h5><ul>
+<li><strong>Support 0.30 %</strong> (~208 baskets) is well above the random-pair expectation (~110 for two 4 % items), so the rules are unlikely to be noise.</li>
+<li><strong>Confidence 6 %</strong> is low in absolute terms, but it is <strong>1.5× the random co-occurrence probability</strong> in a 4-item basket, so it still adds predictive lift.</li>
+<li><strong>Lift 1.30+</strong> lines up with the 95 % confidence envelope for real association in data of this sparsity. Higher cut-offs (1.5, 1.7) quickly shrink the rule set to &lt; 5 rules.</li>
+</ul>
+<p>Thus, the chosen triple filter achieves a balance: enough rules to act on, yet few enough to inspect manually.</p>
 </div>
 </div>
 </div>
@@ -18883,11 +19397,10 @@ Measures how often <strong>X</strong> occurs without <strong>Y</strong> (i.e. th
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [32]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [210]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#  Mine maximal frequent item‑sets at 0.5 % support</span>
-<span class="n">S_min</span> <span class="o">=</span> <span class="mf">0.005</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">S_min</span> <span class="o">=</span> <span class="mf">0.003</span>
 <span class="n">max_itemsets</span> <span class="o">=</span> <span class="n">fpmax</span><span class="p">(</span><span class="n">binary_foodmart</span><span class="p">,</span> <span class="n">min_support</span><span class="o">=</span><span class="n">S_min</span><span class="p">,</span> <span class="n">use_colnames</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">max_itemsets</span><span class="p">[</span><span class="s2">"length"</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_itemsets</span><span class="p">[</span><span class="s2">"itemsets"</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
 
@@ -18897,8 +19410,8 @@ Measures how often <strong>X</strong> occurs without <strong>Y</strong> (i.e. th
 
 
 <span class="c1"># Generate rules using the full frequent‑itemset table</span>
-<span class="n">min_conf</span> <span class="o">=</span> <span class="mf">0.30</span>
-<span class="n">min_lift</span> <span class="o">=</span> <span class="mf">1.15</span>
+<span class="n">min_conf</span> <span class="o">=</span> <span class="mf">0.06</span>
+<span class="n">min_lift</span> <span class="o">=</span> <span class="mf">1.3</span>
 
 <span class="c1"># mine all frequent itemsets at the same support</span>
 <span class="n">freq_items</span> <span class="o">=</span> <span class="n">fpgrowth</span><span class="p">(</span><span class="n">binary_foodmart</span><span class="p">,</span> <span class="n">min_support</span><span class="o">=</span><span class="n">S_min</span><span class="p">,</span> <span class="n">use_colnames</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -18945,7 +19458,7 @@ Measures how often <strong>X</strong> occurs without <strong>Y</strong> (i.e. th
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Number of maximal frequent item‑sets (support ≥ 0.5%): 300
+<pre>Number of maximal frequent item‑sets (support ≥ 0.3%): 679
 </pre>
 </div>
 </div>
@@ -18977,64 +19490,64 @@ Measures how often <strong>X</strong> occurs without <strong>Y</strong> (i.e. th
 </thead>
 <tbody>
 <tr>
-<th>299</th>
+<th>678</th>
 <td>0.007089</td>
 <td>(Fresh Vegetables, Soup, Fresh Fruit)</td>
 <td>3</td>
 </tr>
 <tr>
-<th>298</th>
-<td>0.005334</td>
-<td>(Fresh Vegetables, Cheese, Fresh Fruit)</td>
+<th>622</th>
+<td>0.003451</td>
+<td>(Fresh Vegetables, Milk, Fresh Fruit)</td>
 <td>3</td>
 </tr>
 <tr>
-<th>292</th>
-<td>0.005550</td>
-<td>(Fresh Vegetables, Cookies, Fresh Fruit)</td>
+<th>396</th>
+<td>0.003091</td>
+<td>(Fresh Vegetables, Juice, Fresh Fruit)</td>
 <td>3</td>
 </tr>
 <tr>
-<th>197</th>
-<td>0.005262</td>
-<td>(Lightbulbs, Cookies)</td>
-<td>2</td>
+<th>641</th>
+<td>0.003767</td>
+<td>(Fresh Vegetables, Nuts, Fresh Fruit)</td>
+<td>3</td>
 </tr>
 <tr>
-<th>204</th>
-<td>0.006413</td>
-<td>(Cheese, Sliced Bread)</td>
-<td>2</td>
+<th>599</th>
+<td>0.003523</td>
+<td>(Fresh Vegetables, Chips, Fresh Fruit)</td>
+<td>3</td>
 </tr>
 <tr>
-<th>203</th>
-<td>0.005794</td>
-<td>(Cookies, Sliced Bread)</td>
-<td>2</td>
+<th>611</th>
+<td>0.003221</td>
+<td>(Fresh Vegetables, Preserves, Fresh Fruit)</td>
+<td>3</td>
 </tr>
 <tr>
-<th>202</th>
-<td>0.014752</td>
-<td>(Fresh Vegetables, Lightbulbs)</td>
-<td>2</td>
+<th>657</th>
+<td>0.004026</td>
+<td>(Fresh Vegetables, Fresh Fruit, Canned Vegetables)</td>
+<td>3</td>
 </tr>
 <tr>
-<th>201</th>
-<td>0.010539</td>
-<td>(Lightbulbs, Fresh Fruit)</td>
-<td>2</td>
+<th>632</th>
+<td>0.003264</td>
+<td>(Fresh Vegetables, Chocolate Candy, Fresh Fruit)</td>
+<td>3</td>
 </tr>
 <tr>
-<th>200</th>
-<td>0.007505</td>
-<td>(Lightbulbs, Soup)</td>
-<td>2</td>
+<th>663</th>
+<td>0.004702</td>
+<td>(Fresh Vegetables, Fresh Fruit, Paper Wipes)</td>
+<td>3</td>
 </tr>
 <tr>
-<th>199</th>
-<td>0.007347</td>
-<td>(Lightbulbs, Dried Fruit)</td>
-<td>2</td>
+<th>668</th>
+<td>0.004314</td>
+<td>(Fresh Vegetables, Fresh Fruit, Wine)</td>
+<td>3</td>
 </tr>
 </tbody>
 </table>
@@ -19045,7 +19558,7 @@ Measures how often <strong>X</strong> occurs without <strong>Y</strong> (i.e. th
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>
-Rules from maximal itemsets (confidence ≥ 0.30, lift ≥ 1.15): 1
+Rules from maximal itemsets (confidence ≥ 0.06, lift ≥ 1.30): 22
 </pre>
 </div>
 </div>
@@ -19082,15 +19595,114 @@ Rules from maximal itemsets (confidence ≥ 0.30, lift ≥ 1.15): 1
 </thead>
 <tbody>
 <tr>
-<th>0</th>
-<td>(Soup, Fresh Fruit)</td>
-<td>(Fresh Vegetables)</td>
-<td>0.007089</td>
-<td>493</td>
-<td>0.340705</td>
-<td>1.19772</td>
-<td>0.00117</td>
-<td>1.085309</td>
+<th>310</th>
+<td>(Hot Dogs)</td>
+<td>(Pasta)</td>
+<td>0.003034</td>
+<td>211</td>
+<td>0.075036</td>
+<td>1.524583</td>
+<td>0.001044</td>
+<td>1.027913</td>
+</tr>
+<tr>
+<th>309</th>
+<td>(Pasta)</td>
+<td>(Hot Dogs)</td>
+<td>0.003034</td>
+<td>211</td>
+<td>0.061642</td>
+<td>1.524583</td>
+<td>0.001044</td>
+<td>1.022603</td>
+</tr>
+<tr>
+<th>774</th>
+<td>(Deli Salads)</td>
+<td>(Juice)</td>
+<td>0.003379</td>
+<td>235</td>
+<td>0.081512</td>
+<td>1.518238</td>
+<td>0.001153</td>
+<td>1.030293</td>
+</tr>
+<tr>
+<th>773</th>
+<td>(Juice)</td>
+<td>(Deli Salads)</td>
+<td>0.003379</td>
+<td>235</td>
+<td>0.062935</td>
+<td>1.518238</td>
+<td>0.001153</td>
+<td>1.022925</td>
+</tr>
+<tr>
+<th>705</th>
+<td>(Waffles)</td>
+<td>(Frozen Chicken)</td>
+<td>0.003321</td>
+<td>231</td>
+<td>0.060805</td>
+<td>1.490120</td>
+<td>0.001092</td>
+<td>1.021295</td>
+</tr>
+<tr>
+<th>704</th>
+<td>(Frozen Chicken)</td>
+<td>(Waffles)</td>
+<td>0.003321</td>
+<td>231</td>
+<td>0.081395</td>
+<td>1.490120</td>
+<td>0.001092</td>
+<td>1.029144</td>
+</tr>
+<tr>
+<th>636</th>
+<td>(Pizza)</td>
+<td>(Ice Cream)</td>
+<td>0.003393</td>
+<td>236</td>
+<td>0.062783</td>
+<td>1.477655</td>
+<td>0.001097</td>
+<td>1.021654</td>
+</tr>
+<tr>
+<th>635</th>
+<td>(Ice Cream)</td>
+<td>(Pizza)</td>
+<td>0.003393</td>
+<td>236</td>
+<td>0.079865</td>
+<td>1.477655</td>
+<td>0.001097</td>
+<td>1.028057</td>
+</tr>
+<tr>
+<th>779</th>
+<td>(Deli Salads)</td>
+<td>(Pizza)</td>
+<td>0.003264</td>
+<td>227</td>
+<td>0.078737</td>
+<td>1.456799</td>
+<td>0.001023</td>
+<td>1.026799</td>
+</tr>
+<tr>
+<th>778</th>
+<td>(Pizza)</td>
+<td>(Deli Salads)</td>
+<td>0.003264</td>
+<td>227</td>
+<td>0.060388</td>
+<td>1.456799</td>
+<td>0.001023</td>
+<td>1.020153</td>
 </tr>
 </tbody>
 </table>
@@ -19106,21 +19718,10 @@ Rules from maximal itemsets (confidence ≥ 0.30, lift ≥ 1.15): 1
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>At a <strong>0.5% support threshold</strong>, <strong>300 maximal itemsets</strong> were identified—those combinations that cannot be extended without falling below the cutoff.  The three longest patterns each contain <strong>three items</strong> and capture: <strong>(Fresh Fruit, Soup, Fresh Vegetables)</strong> appears in <strong>0.71%</strong> of transactions, while <strong>(Fresh Fruit, Cheese, Fresh Vegetables)</strong> and <strong>(Fresh Fruit, Cookies, Fresh Vegetables)</strong> occur in roughly <strong>0.53%–0.56%</strong> of transactions.</p>
-<p>Two-item maximals such as <strong>(Lightbulbs, Cookies)</strong> or <strong>(Sliced Bread, Cheese)</strong> reveal stable but less obvious pairings; these cross-category links would otherwise be buried among thousands of smaller frequent sets.  By isolating only the maximal patterns, the output shrinks from tens of thousands of item sets down to <strong>300 key combinations</strong>, offering a highly compressed yet semantically rich summary of purchasing behaviour.</p>
-<p>When association rules are generated at <strong>confidence ≥ 20%</strong> and then filtered for <strong>lift ≥ 1.15</strong> within those maximal patterns, only <strong>six associations</strong> remain:</p>
-<ul>
-<li><p>Three single-item antecedents:
-<strong>Rice → Fresh Fruit</strong>, <strong>TV Dinner → Fresh Fruit</strong>, <strong>Mouthwash → Fresh Fruit</strong></p>
-</li>
-<li><p>Two snacks to produce links:
-<strong>Hard Candy → Fresh Fruit</strong>, <strong>Flavored Drinks → Fresh Fruit</strong></p>
-</li>
-</ul>
-<p>Top popular products being so frequent are misleading the results.</p>
-<p>It boosts the likelihood of purchasing <strong>Fresh Fruit</strong> by <strong>17%–22%</strong> over random, though <strong>leverage remains at just 0.0009–0.0015</strong> (<ins>one extra co purchase per thousand baskets</ins>).  The standout triadic rule <strong>{Fresh Fruit, Soup} → Fresh Vegetables</strong> achieves <strong>34% confidence</strong> and <strong>lift 1.20</strong> but still adds only <strong>0.0012 leverage</strong>.</p>
-<p>The retained rules all have <strong>lift &gt; 1</strong> and <strong>conviction &gt; 1</strong>, confirming that the antecedent and consequent co occur more often than chance (statistical reliability), but their <strong>leverage</strong> values remain below <strong>0.0015</strong>, meaning each rule yields fewer than two extra co purchases per thousand transactions (modest practical impact), meaning these rules seen <strong>statistically reliable</strong> but <strong>modest in practical impact</strong>.</p>
-<p>Maximal pattern mining shows a <strong>concise, logical foundation</strong>: the largest most stable baskets, while the derived rules pinpoint the clearest cross-sell opportunities.  However, the <strong>low leverage</strong> still present like the prior mined rules suggests that <strong>deeper segmentation</strong> (<ins>e.g., by store type</ins>) to truly see meaningfull associations.</p>
+<p>Using <ins><strong>FP-Max</strong></ins> at the same <strong>0.3%</strong> support threshold shrinks the pattern catalogue from about <strong>3 600</strong> ordinary frequent itemsets to <strong>679</strong> maximal ones, yet the association-rule phase is unchanged: with <ins>confidence ≥ <strong>0.06</strong></ins> and <ins>lift ≥ <strong>1.30</strong></ins> we still recover <strong>22</strong> rules.</p>
+<p>Every pair that forms a rule is already contained in at least one maximal 3-item set, so discarding smaller subsets does <strong>not</strong> remove any potential rule material.</p>
+<p><strong>What changes was basically storage and inspection effort</strong>, support values for pruned subsets disappear, although they can be recomputed on demand, while most of the information is identical. The dominant maximal patterns remain the triads <strong>“Fresh Vegetables + Fresh Fruit + X”</strong>, showing that these two staples underpin most high-support baskets and, consequently, most medium-strength rules.</p>
+<p>Maximal mining is useful to produce a <ins><em>leaner</em></ins> yet information, preserving summary of the dataset. <strong>However</strong>, that saving comes at a price: the algorithm jettisons the <strong>exact support for every proper subset</strong>, so details between, for instance, <em>Cereal &amp; Milk</em> and <em>Cereal &amp; Cookies</em> are removed, and any rerun with tighter confidence/lift bars demands another pass through the data. In short, <ins>maximal mining compresses</ins> the lattice but cannot fully replace the some details that are removed.</p>
 </div>
 </div>
 </div>
