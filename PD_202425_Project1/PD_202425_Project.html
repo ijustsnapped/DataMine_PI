@@ -26142,39 +26142,13 @@ After filtering, 2 rules remain (from original 7 at 1.5% support).
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<ol>
-<li><p><strong>Rule Volume &amp; Thresholds</strong></p>
-<ul>
-<li><strong>All stores</strong> (Task 1) yielded <strong>22 strong rules</strong> at <code>min_sup = 0.3%</code>, <code>min_conf = 6%</code>, <code>min_lift = 1.3</code>.</li>
-<li><strong>Small groceries</strong> (Task 2) produced <strong>21 rules</strong> at <code>min_sup = 0.8%</code>, <code>min_conf = 15%</code>, <code>min_lift = 1.2</code>, and only <strong>7 rules</strong> at a higher <code>min_sup = 1.5%</code>.<br/>
-This reflects both the reduced transaction volume in Small Groceries and the need for higher support/confidence to isolate robust patterns.</li>
-</ul>
-</li>
-<li><p><strong>Category Focus</strong></p>
-<ul>
-<li><strong>All stores</strong> rules feature a <strong>wide variety</strong> of cross-category pairings (e.g., <em>Hot Dogs ↔ Pasta, Deli Salads ↔ Juice, Frozen Chicken ↔ Waffles</em>), highlighting general purchasing trends across diverse product lines.</li>
-<li><strong>Small groceries</strong> rules skew heavily toward <strong>fresh produce</strong> and <strong>household essentials</strong> (e.g., <em>Fresh Fruit/Vegetables → Paper Wipes, Dried Fruit ↔ Cheese, Jam → Cookies</em>), reflecting the narrower assortment typical of small grocery outlets.</li>
-</ul>
-</li>
-<li><p><strong>Strength of Associations</strong></p>
-<ul>
-<li>Top lifts in <strong>all stores</strong> exceed <strong>1.50</strong> (e.g., <em>Hot Dogs → Pasta, Lift≈1.52</em>), but many rules cluster just above <strong>1.30</strong>.</li>
-<li>In <strong>Small Groceries</strong>, the strongest link is <em>Fresh Fruit &amp; Fresh Vegetables → Paper Wipes</em> with <strong>Lift≈2.17</strong>, indicating a very pronounced co-purchase trend in that segment. Even the lower-lift patterns still exceed <strong>1.20</strong>, showing consistently meaningful associations despite higher support/confidence requirements.</li>
-</ul>
-</li>
-<li><p><strong>Symmetry vs. Directionality</strong></p>
-<ul>
-<li>Many <strong>global rules</strong> appear in <strong>both directions</strong> (e.g., <em>Pasta → Hot Dogs</em> and <em>Hot Dogs → Pasta</em>), owing to similar support levels in a large dataset.</li>
-<li><strong>Small Groceries</strong> rules tend to be <strong>directional</strong>—for example, <em>Dried Fruit → Cheese</em> remains significant, whereas the reverse holds, but only at the lower support threshold.</li>
-</ul>
-</li>
-<li><p><strong>Practical Implications</strong></p>
-<ul>
-<li><strong>Global patterns</strong> can inform broad merchandising and cross-category promotions at scale.</li>
-<li><strong>Small-groceries patterns</strong> suggest targeted bundling opportunities (e.g., placing paper wipes near fresh produce) and niche promotions (e.g., cheese with dried fruit) that maximize the limited shelf space of these smaller stores.</li>
-</ul>
-</li>
-</ol>
+<p>Across the full database of 69,549 baskets a minimum‑support window of 0.3-0.5% (around 210 receipts) yielded around 800 frequent 2‑itemsets and 22 association rules of modest strength.</p>
+<p>Segmenting the analysis to the four Small‑Grocery stores (2,278 receipts) forces the statistical floor up to 1-1.5% (23-34 baskets). Even at this tougher threshold the subset still contains 428 frequent pairs and 21 rules that clear s ≥ 0.75%, c ≥ 15%, l ≥ 1.20. In other words, a 97% cut in sample size scarcely reduces the rule count, what changes is which rules survive.</p>
+<p>The produce triad (Fresh Vegetables, Fresh Fruit, Soup) remains the backbone: Fresh Fruit ∧ Fresh Vegetables is the top pair everywhere, and staples like Dried Fruit ⇄ Cheese retain almost identical lift (around 1.53). These are genuine chain‑wide affinities, not artefacts of aggregation.</p>
+<p>Beyond that core, small‑store behaviour diverges. The strongest local link, Paper Wipes → Fresh Fruit (lift 2.17, confidence 28%), may capture a <em>grab‑and‑go</em> mission: shoppers pop in for a household essential and add produce at the till. Similar "impulse + produce" patterns: TV Dinner → Fresh Vegetables and Ice Cream → Fresh Vegetables, show lifts around 1.3 yet are too infrequent to appear in the global model (maybe just be noise). Conversely, chain‑level rules driven by high baseline supports, such as Hot Dogs ⇄ Pasta, fall below the stricter local support cut and vanish.</p>
+<p>Excluding the two dominant produce items sharpens the contrast: eight rules centred on snack or convenience pairings like Jam → Cookies and Juice → Dried Fruit.</p>
+<p>Thus, like previously seen aggregation inflates associations tied to ubiquitous staples and obscures niche patterns that matter in convenience formats. Segment‑specific mining-using allows for higher support thresholds, and wehn filtering hyper‑popular items we can get some interesting associations like: that small groceries cater chiefly to quick errands round out with fresh produce or a modest indulgence.</p>
+<p>Merchandising in these outlets should therefore couple household basics, freezer meals, or snacks with nearby displays of fruit and vegetables rather than the pantry‑building bundles effective in larger stores.</p>
 </div>
 </div>
 </div>
@@ -26185,18 +26159,7 @@ This reflects both the reduced transaction volume in Small Groceries and the nee
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Write text in cells like this</p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="2.3.--Deluxe-and-Gourmet-Supermarkets-versus-Small-Groceries">2.3.  Deluxe and Gourmet Supermarkets versus Small Groceries<a class="anchor-link" href="#2.3.--Deluxe-and-Gourmet-Supermarkets-versus-Small-Groceries">¶</a></h3><p>Discuss the similarities and diferences between the results obtained in task 2.1. (frequent itemsets and association rules found in transactions only from Deluxe/Gourmet Supermarkets) and those obtained in task 2.2. (frequent itemsets and association rules found in transactions only Small Groceries).</p>
+<h3 id="2.3.--Deluxe-and-Gourmet-Supermarkets-versus-Small-Groceries">2.3.  Deluxe and Gourmet Supermarkets versus Small Groceries<a class="anchor-link" href="#2.3.--Deluxe-and-Gourmet-Supermarkets-versus-Small-Groceries">¶</a></h3><p>Discuss the similarities and differences between the results obtained in task 2.1. (frequent itemsets and association rules found in transactions only from Deluxe/Gourmet Supermarkets) and those obtained in task 2.2. (frequent itemsets and association rules found in transactions only Small Groceries).</p>
 </div>
 </div>
 </div>
@@ -26208,39 +26171,58 @@ This reflects both the reduced transaction volume in Small Groceries and the nee
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>In Tasks 2.1 and 2.2 we independently mined association rules—first on transactions from Deluxe/Gourmet supermarkets (support ≥ 1.0 %, confidence ≥ 10 %, lift ≥ 1.20), then on Small-Groceries transactions (support ≥ 0.8 % and 1.5 %, confidence ≥ 15 %, lift ≥ 1.20). Here are the key similarities and contrasts:</p>
-<ol>
-<li><p><strong>Overall Rule Counts &amp; Threshold Effects</strong></p>
+<p>All three store groups share a produce spine (the usual Fresh Vegetables, Fresh Fruit and their pair dominate every frequency table and re‑appear in most rules) yet the associations that branch off it differ in both content and strength once we isolated.</p>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th style="text-align:right">Baskets</th>
+<th style="text-align:right">Min. Support</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Deluxe</td>
+<td style="text-align:right">25,923</td>
+<td style="text-align:right">0.5%</td>
+</tr>
+<tr>
+<td>Gourmet</td>
+<td style="text-align:right">5,328</td>
+<td style="text-align:right">1.0%</td>
+</tr>
+<tr>
+<td>Small</td>
+<td style="text-align:right">2,278</td>
+<td style="text-align:right">1.5%</td>
+</tr>
+</tbody>
+</table>
+<p>Lift ≥ 1.20 in all cases.</p>
 <ul>
-<li>Both segments yielded roughly a dozen strong rules when moderate support and confidence thresholds were applied.</li>
-<li>Tightening support (from 0.8 % to 1.5 % in Small-Groceries) pruned many lower-frequency patterns, leaving only the strongest two (Dried Fruit ⇄ Cheese).</li>
-</ul>
+<li><p>Deluxe rules splice produce with a broad range of centre‑store and personal‑care items (Deli Salads → Cheese; Conditioner → Fresh Veg). The basket looks like a weekly stock‑up: shoppers add fresh food while refilling many other aisles.</p>
 </li>
-<li><p><strong>Dominant Item Categories</strong></p>
-<ul>
-<li><strong>Fresh produce</strong> (Fruit &amp; Vegetables) appears in the antecedent or consequent in most rules, across both store types.</li>
-<li><strong>Packaged staples</strong> (Soup, Cheese, Cookies, Dried Fruit) also recur—pointing to common cross-selling opportunities everywhere.</li>
-</ul>
+<li><p>Gourmet keeps the produce link but narrows the trigger to foods (many which could be preminum like Wine, Cheese and Fruit) (Pizza → Fresh Fruit; Wine ⇆ Fresh Fruit; Cheese ⇆ Soup). Non‑food categories mostly disappear, reflecting a culinary specialisation to this stores.</p>
 </li>
-<li><p><strong>Lift &amp; Confidence Patterns</strong></p>
-<ul>
-<li><strong>Deluxe/Gourmet rules</strong> tend to have moderate lifts (1.20–1.42) but fairly wide confidence ranges (10–37 %), reflecting more varied, less-frequent purchase combinations.</li>
-<li><strong>Small-Groceries rules</strong> show higher lifts (up to 2.17) and higher confidences (15–37 %), indicating tighter, more predictable buying patterns in a smaller-SKU environment.</li>
-</ul>
+<li><p>Small Groceries show a more grab‑and‑go pattern: high‑lift rules pair a single staple or frozen item with produce (Paper Wipes → Fresh Fruit; TV Dinner → Fresh Veg; Ice‑Cream → Fresh Veg).</p>
 </li>
-<li><p><strong>Unique Cross-Sells</strong></p>
-<ul>
-<li><strong>Deluxe/Gourmet</strong>: Specialty pairs like Fresh Fruit → Wine, Soup ⇄ Cheese, Jelly → Fresh Vegetables.</li>
-<li><strong>Small-Groceries</strong>: Everyday combos such as Juice → Dried Fruit, Jam → Cookies, Paper Wipes → Fresh Fruit. This suggests distinct promotional bundling strategies.</li>
 </ul>
-</li>
-<li><p><strong>Implications for Merchandising</strong></p>
-<ul>
-<li>In Gourmet channels, highlight premium cross-sells (e.g. fruit + wine displays).</li>
-<li>In Small-Groceries, focus on convenience pairings (e.g. place dried fruits near juice, jam near cookies).</li>
-</ul>
-</li>
-</ol>
-<p>By comparing these two segments side-by-side, we can tailor marketing and shelf layouts to the distinct shopping behaviors in each store type.</p>
+<p><strong>Symmetry and Basket Width</strong></p>
+<p>Symmetric rules, where both A ⇒ B and B ⇒ A appear, signal true co‐selection rather than a one‐way "trigger" effect. They show two items tend to be bought together (a mutual affinity), not that one purchase reliably causes the other. This helps distinguish genuine usual pairings.</p>
+<p>Deluxe produces many reciprocal rules, suggesting general co‑selection in larger baskets.
+On the other hand, Gourmet has fewer symmetrical links; choices are more directed. Small Groceries show the least symmetry: shoppers start with a specific necessity (paper wipes, TV dinner) and then add produce, not the reverse.</p>
+<p><strong>Persistent chain‑wide affinities</strong></p>
+<p>A few cross‑category staples, most clearly Dried Fruit ⇄ Cheese-retain virtually identical lift (≈ 1.53) across all formats. These stand out as robust rule candidates valid for most stores.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 </div>
 </div>
 </div>
