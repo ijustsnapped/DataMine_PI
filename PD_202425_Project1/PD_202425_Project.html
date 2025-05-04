@@ -16401,7 +16401,7 @@ Finally, the most interesting region is <strong>0.5% – 0.3%</strong>: items ap
 <li><strong>Deli Salads → Cheese</strong> (lift <strong>1.39</strong>)</li>
 <li><strong>Soda → Canned Vegetables</strong> (lift <strong>1.29</strong>)</li>
 </ul>
-<p>emerge.  Below 0.3 % lift can climb past <strong>1.5</strong>, but the absolute counts drop under 200 and the risk of sampling noise rises sharply.</p>
+<p>emerge.  Below 0.3% lift can climb past <strong>1.5</strong>, but the absolute counts drop under 200 and the risk of sampling noise rises sharply.</p>
 <p><strong>Why are Values so Damn Low...</strong></p>
 <ul>
 <li><strong>Skewed item popularity</strong>. Two extremely frequent items dominate many baskets, most candidate pairs inherit large denominators in the lift formula, squeezing the ratio towards <strong>1</strong>.</li>
@@ -21624,8 +21624,8 @@ if (outputEl) {{
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="2.1.3.1.-Discussing-Results">2.1.3.1. Discussing Results<a class="anchor-link" href="#2.1.3.1.-Discussing-Results">¶</a></h4><h5 id="Deluxe-Stores">Deluxe Stores<a class="anchor-link" href="#Deluxe-Stores">¶</a></h5><p>The triple-filter applied to the Deluxe subset (minimum support = 0.30 %, confidence ≥ 0.15 and lift ≥ 1.20) yields twenty-three association rules.  Their supports range from 0.30 % to 0.86 % of the 25 923 Deluxe transactions—equivalent to 78–222 individual baskets—while confidence values span 15 % to almost 46 %.  Lift lies between 1.23 and 1.72, comfortably above statistical independence yet still below the “lock-step” threshold of two that would indicate an almost deterministic link.  As is common with sparse market-basket data, leverage hovers around 0.001 with a standard deviation of roughly 0.0004, and conviction settles in the interval 1.04–1.28: these absolute magnitudes look small because leverage is an unscaled probability difference and conviction is bounded below two when confidence never approaches one.  Nevertheless, both metrics show that the rules reduce prediction error by roughly 100 % relative to chance.</p>
-<p>Table 1 reproduces the most instructive Deluxe rules—the eight highest-lift links after the filter—and supplements them with a brief merchandising interpretation.</p>
+<h4 id="2.1.3.1.-Discussing-Results">2.1.3.1. Discussing Results<a class="anchor-link" href="#2.1.3.1.-Discussing-Results">¶</a></h4><h5 id="Deluxe-Stores">Deluxe Stores<a class="anchor-link" href="#Deluxe-Stores">¶</a></h5><p>The triple-filter applied to the Deluxe subset (minimum support = 0.30 %, confidence ≥ 0.15 and lift ≥ 1.20) yielded twenty-three association rules. Their supports range from 0.30 % to 0.86 % of the 25,923 Deluxe transactions, while confidence values span 15% to almost 46% (much higher than global!!!). Lift lies between 1.23 and 1.72, somewhat above statistical independence. As is common with sparse market-basket data, leverage hovers around 0.001 with a standard deviation of roughly 0.0004, and conviction settles in the interval 1.04-1.28.</p>
+<p>Table 1 reproduces the most instructive Deluxe rules-the eight highest-lift links after the filter-and supplements them with a brief merchandising interpretation.</p>
 <table>
 <thead>
 <tr>
@@ -21642,7 +21642,7 @@ if (outputEl) {{
 <td>0.38</td>
 <td>44.6</td>
 <td>1.54</td>
-<td>Shoppers who stock sweet–salty snacks still round out the basket with produce to “balance” the treat.</td>
+<td>Shoppers who stock sweet-salty snacks still round out the basket with produce to "balance" the treat.</td>
 </tr>
 <tr>
 <td>Conditioner ⇒ Fresh Vegetables</td>
@@ -21656,7 +21656,7 @@ if (outputEl) {{
 <td>0.54</td>
 <td>36.1</td>
 <td>1.24</td>
-<td>“Aspirational cooking” effect: décor or lifestyle magazines nudge shoppers toward fresh ingredients.</td>
+<td>"Aspirational cooking" effect: décor or lifestyle magazines nudge shoppers toward fresh ingredients.</td>
 </tr>
 <tr>
 <td>Fresh Fruit + Soup ⇒ Fresh Vegetables</td>
@@ -21698,7 +21698,7 @@ if (outputEl) {{
 <td>0.31</td>
 <td>22.0</td>
 <td>1.25</td>
-<td>Lifestyle content prompts healthier food choices, mirroring “magazine diet” behaviour.</td>
+<td>Lifestyle content prompts healthier food choices, mirroring "magazine diet" behaviour.</td>
 </tr>
 <tr>
 <td>Fresh Vegetables + Batteries ⇒ Fresh Fruit</td>
@@ -21712,7 +21712,7 @@ if (outputEl) {{
 <td>0.63</td>
 <td>21.8</td>
 <td>1.24</td>
-<td>Oral-care purchasers also reach for fresh fruit—consistent with wellness-minded shoppers.</td>
+<td>Oral-care purchasers also reach for fresh fruit-consistent with wellness-minded shoppers.</td>
 </tr>
 <tr>
 <td>Juice + Fresh Vegetables ⇒ Fresh Fruit</td>
@@ -21733,7 +21733,7 @@ if (outputEl) {{
 <td>0.30</td>
 <td>21.0</td>
 <td>1.72</td>
-<td>“Two-meal” basket: breakfast items and vegetables today, shelf-stable soup for later.</td>
+<td>"Two-meal" basket: breakfast items and vegetables today, shelf-stable soup for later.</td>
 </tr>
 <tr>
 <td>Nuts + Fresh Vegetables ⇒ Cookies</td>
@@ -21775,14 +21775,14 @@ if (outputEl) {{
 <td>0.42</td>
 <td>15.3</td>
 <td>1.28</td>
-<td>“Sweet-and-savory” snacking: dried fruit paired with dairy-based dips.</td>
+<td>"Sweet-and-savory" snacking: dried fruit paired with dairy-based dips.</td>
 </tr>
 <tr>
 <td>Hard Candy ⇒ Cheese</td>
 <td>0.44</td>
 <td>15.1</td>
 <td>1.29</td>
-<td>Candy impulse accompanies cheese—possibly for party trays.</td>
+<td>Candy impulse accompanies cheese-possibly for party trays.</td>
 </tr>
 <tr>
 <td>Tuna ⇒ Cheese</td>
@@ -21793,8 +21793,8 @@ if (outputEl) {{
 </tr>
 </tbody>
 </table>
-<p>Ten of the twenty-three Deluxe affinities are symmetric: the reciprocal rule B ⇒ A appears with virtually identical confidence.  Such symmetry indicates co-selection rather than a sequential “trigger” effect.</p>
-<h5 id="Gourmet-Stores">Gourmet Stores<a class="anchor-link" href="#Gourmet-Stores">¶</a></h5><p>The Gourmet subset is an order of magnitude smaller (5 328 receipts).  To avoid rules based on fewer than twenty baskets, the support floor was therefore raised to 1 %.  With confidence fixed at 10 % and lift at 1.20, thirteen rules remain.  Their supports cover 1.0–1.8 %, confidence ranges from 10 % to 37 % and lift from 1.22 to 1.42.  Leverage is slightly higher than in Deluxe (0.002–0.004) and conviction approaches 1.10, reflecting the stronger absolute supports.</p>
+<p>Ten of the twenty-three Deluxe affinities are symmetric: the reciprocal rule B ⇒ A appears with virtually identical confidence. This symmetry is co-selection rather and not a sequential "trigger" effect.</p>
+<h5 id="Gourmet-Stores">Gourmet Stores<a class="anchor-link" href="#Gourmet-Stores">¶</a></h5><p>The Gourmet subset is an order of magnitude smaller (5,328 receipts). To avoid rules based on fewer than twenty baskets, the support floor was therefore raised to 1%. With confidence fixed at 10% and lift at 1.20, thirteen rules remain. Their supports cover 1.0-1.8%, confidence ranges from 10% to 37% and lift from 1.22 to 1.42. Leverage is slightly higher than in Deluxe (0.002-0.004) and conviction approaches 1.10, reflecting the stronger absolute supports.</p>
 <p>Table 2 lists the seven Gourmet patterns with the greatest explanatory value.</p>
 <table>
 <thead>
@@ -21812,7 +21812,7 @@ if (outputEl) {{
 <td>1.37</td>
 <td><strong>25.0</strong></td>
 <td><strong>1.42</strong></td>
-<td>Shoppers often offset a ready-to-eat pizza with fresh fruit—dessert for the same meal or lunch-box add-on.</td>
+<td>Shoppers often offset a ready-to-eat pizza with fresh fruit-dessert for the same meal or lunch-box add-on.</td>
 </tr>
 <tr>
 <td><strong>Wine</strong> ⇒ Fresh Fruit</td>
@@ -21833,7 +21833,7 @@ if (outputEl) {{
 <td>1.05</td>
 <td><strong>37.1</strong></td>
 <td>1.28</td>
-<td>Cold-remedy trips trigger a “healthy-food” complement—customers seek fresh produce for recovery.</td>
+<td>Cold-remedy trips trigger a "healthy-food" complement-customers seek fresh produce for recovery.</td>
 </tr>
 <tr>
 <td><strong>Mouthwash</strong> ⇒ Fresh Vegetables</td>
@@ -21847,7 +21847,7 @@ if (outputEl) {{
 <td>1.05</td>
 <td>35.4</td>
 <td>1.23</td>
-<td>“Clean house, clean diet” behaviour: home-care shoppers add fresh greens in the same visit.</td>
+<td>"Clean house, clean diet" behaviour: home-care shoppers add fresh greens in the same visit.</td>
 </tr>
 <tr>
 <td><strong>Paper Wipes</strong> ⇒ Cookies</td>
@@ -21861,7 +21861,7 @@ if (outputEl) {{
 <td>1.24</td>
 <td>34.9</td>
 <td>1.21</td>
-<td>Shoppers picking up preserves also choose fresh produce—perhaps for sandwiches or breakfast spreads.</td>
+<td>Shoppers picking up preserves also choose fresh produce-perhaps for sandwiches or breakfast spreads.</td>
 </tr>
 <tr>
 <td><strong>Cheese ⇄ Soup</strong></td>
@@ -21875,23 +21875,12 @@ if (outputEl) {{
 <td>1.24</td>
 <td>14.8 / 10.2</td>
 <td>1.22</td>
-<td>A “gourmet dinner kit” pattern: soup starters paired with wine; symmetry again shows mutual attraction.</td>
+<td>A "gourmet dinner kit" pattern: soup starters paired with wine; symmetry again shows mutual attraction.</td>
 </tr>
 </tbody>
 </table>
-<p>Only three Gourmet associations are symmetric, implying that most affinities run one way—from a focal grocery or household staple to a complementary indulgence or healthy offset.</p>
-<p>Much like the global data set, the small leverage and conviction values deserve a brief methodological note.  Leverage measures the absolute distance between observed and expected co-occurrence.  A value of 0.001 may appear negligible, yet against a baseline expectation of 0.0005 it represents a 100 % improvement.  Conviction only exceeds 1.3 in baskets of four items because true negatives dominate the contingency table. However, conviction greater than one signals that the rule fails less often than independence predicts.</p>
-<p>Finally, the chosen thresholds are defensible on statistical and managerial grounds.  A 0.30 % support floor in Deluxe (≈ 80 baskets) and 1 % in Gourmet (&gt; 50 baskets) sit well above the frequency expected for two unrelated 4 % items, effectively filtering out random noise.  Confidence requirements of 10–15 % lift the conditional probability to roughly 1.5–2 times the naïve joint rate, while lift ≥ 1.20 lies outside the 95 % independence envelope for datasets of this sparsity.  More stringent cuts (lift &gt; 1.5, leverage ≥ 0.0018, conviction ≥ 1.05) collapse the rule set to a handful of flagship affinities; looser cuts admit hundreds of spurious links.  The adopted triple filter therefore achieves the desired balance: a manageable portfolio of actionable rules that still convey genuine behavioural signals for cross-merchandising and promotional planning.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>Only three Gourmet associations are symmetric.</p>
+<p>Shopper behaviour is broadly comparable across the two store types, but Gourmet customers show a modest tilt toward indulgence (Wine in a couple), while Deluxe baskets has more routine pantry and household staples.</p>
 </div>
 </div>
 </div>
@@ -22177,7 +22166,7 @@ if (outputEl) {{
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [248]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
@@ -22798,10 +22787,28 @@ if (outputEl) {{
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="2.1.5.1-Deluxe-vs-Gourmet-Supermarkets">2.1.5.1 Deluxe vs Gourmet Supermarkets<a class="anchor-link" href="#2.1.5.1-Deluxe-vs-Gourmet-Supermarkets">¶</a></h4><p>Before diving into numbers, it helps to step back and ask: do Deluxe and Gourmet shoppers behave fundamentally like each other, or does each format attract a subtly different mission? In both rule-sets you’ll see familiar grocery pairings — produce with prepared foods, soup with wine—but the nuances reveal how these two store types shape buying patterns.</p>
-<p>In the Deluxe rules (sup ≥ 0.5%, conf ≥ 0.12, lift ≥ 1.20), we uncover a mix of food to food and non-food to food connections. Deli Salads → Cheese tops the list (lift ≈ 1.34), underscoring a deli-centric mission: shoppers grabbing ready-to-eat items then adding complementary cheeses. Equally notable are cross-category “impulse” links—Conditioner → Fresh Vegetables and Mouthwash → Fresh Fruit—suggesting that Deluxe customers often combine personal-care or home-care purchases with fresh produce in a single visit: it could signify that consumers thinking of personal care also think of their diet as well, or perhaps the positioning of the Deluxe supermarkets invites the shoppers' eye to the Fresh foods part after visiting the personal care section. The breadth of antecedents (Paper Wipes, Home Magazines, Personal Hygiene) hints at a one-stop premium experience.</p>
-<p>By contrast, the Gourmet rules (sup ≥ 1.0%, conf ≥ 0.10, lift ≥ 1.20) refocus on classic food-only affinities, as expected for this type of food-dedicated type of stores. Fresh Fruit ↔ Wine and Cheese ↔ Soup appear immediately, reflecting the refined, food-centric mission of a high-end gourmet shop. The strongest lift (Pizza → Fresh Fruit, lift ≈ 1.42) still ties produce to prepared foods, but personal-care items vanish—gourmet customers rarely mix non-food in these transactions. Instead, they concentrate on artisanal staples: Jelly → Fresh Vegetables and Canned Vegetables → Cookies point to curated pantry builds.</p>
-<p>In other words, both formats share the chain-wide backbone—produce pairs with prepared foods, soup with wine—but Deluxe extends that backbone into adjacent categories (home and personal care), while Gourmet doubles down on pure food craftsmanship. Deluxe rules reveal a hybrid grocery+“lifestyle” basket; Gourmet rules reveal a laser-focus on premium edibles. This suggests that store designs could be different and catch the eye of the client, producing these different item-type combinations.</p>
+<h4 id="2.1.5.1-Deluxe-vs-Gourmet-Supermarkets">2.1.5.1 Deluxe vs Gourmet Supermarkets<a class="anchor-link" href="#2.1.5.1-Deluxe-vs-Gourmet-Supermarkets">¶</a></h4><p>Before diving going numbers, we should ask ourselves: do Deluxe and Gourmet shoppers behave like each other, or does each format different (even if subtle) dynamics? In both rule-sets it's clear there are a few familiar grocery pairings (produce with prepared foods), but the nuances reveal how these two store types shape different buying patterns.</p>
+<p>Deluxe (support ≥ 0.5 %, confidence ≥ 0.12, lift ≥ 1.20, 25  923 baskets) mixes centre‑store food pairings with clear non‑food → fresh links.</p>
+<ul>
+<li><p>Deli Salads → Cheese (lift 1.34) and Cereal → Soup show the routine "fill‑the‑fridge" or ready‑to‑eat focus typical of large stores.</p>
+</li>
+<li><p>Personal‑care or household items frequently lead to produce: Conditioner → Fresh Vegetables, Mouthwash → Fresh Fruit, Paper Wipes + Fresh Vegetables ⇒ Fresh Fruit.</p>
+</li>
+</ul>
+<p>These associations might just be the result of noise, but taken for what they are they might suggest a more one‑stop errand-customers whose personal and home‑care items frequently trigger produce pick-up.</p>
+<p>Gourmet (support ≥ 1 %, confidence ≥ 0.10, lift ≥ 1.20, 5,328 baskets) shoppers <strong>almost exclusively have food‑only baskets rules</strong>, consistent with a premium, food‑centric experience (not home nor personal hygiene)</p>
+<ul>
+<li><p>Pizza → Fresh Fruit has the highest lift (1.42), balancing a convenience entrée with fresh dessert.</p>
+</li>
+<li><p>Reciprocal Wine ⇆ Fresh Fruit and Wine ⇆ Soup bundles suggest "gourmet dinner kit" baskets.</p>
+</li>
+<li><p>Pantry links such as Canned Vegetables → Cookies and Jelly → Fresh Vegetables round out curated food restocks.</p>
+</li>
+<li><p>Personal‑ and home‑care triggers disappear; gourmet shoppers rarely add non‑food items to these baskets.</p>
+</li>
+</ul>
+<p><strong>Common backbone, different emphasis</strong>:</p>
+<p>Both store types reproduce the chain‑wide core: produce pairs frequently with prepared foods, and soup often rides the same ticket (being the most frequent items). The divergence lies in the "extras": Deluxe customers bolt fresh produce onto everyday non‑food errands, while Gourmet customers double down on indulgent and focus on food combinations, leaving out toiletries.</p>
 </div>
 </div>
 </div>
@@ -22812,31 +22819,17 @@ if (outputEl) {{
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4 id="2.1.5.2-Task-1-Rules-vs-Task-2-Rules">2.1.5.2 Task 1 Rules vs Task 2 Rules<a class="anchor-link" href="#2.1.5.2-Task-1-Rules-vs-Task-2-Rules">¶</a></h4><p>Shoppers across the entire chain reveal a handful of broad, classic grocery affinities—Conditioner → Fresh Vegetables, Rice → Fresh Fruit, TV Dinner → Fresh Fruit—when we set a moderate bar (sup ≥ 0.3%, conf ≥ 20%, lift ≥ 1.20). These three rules capture everyday “stock-up” behaviors that cut across formats: a bit of personal-care sneaks into produce, grains lead to fruit, and ready-meals accompany fresh snacks. When we tighten our lens to only the strongest lifts (≥ 1.30), we unearth a richer tapestry — Hot Dogs ↔ Pasta, Deli Salads ↔ Juice, Pizza ↔ Ice Cream and even Cleaners ↔ Chocolate Candy — yet the playbook remains familiar: staples, treats, and the occasional home-care impulse.</p>
-<p>Stepping into the Deluxe stores, the narrative shifts. At sup ≥ 0.5%, conf ≥ 12%, lift ≥ 1.20 we still see Deli Salads → Cheese and Juice → Soup, but now they share billing with Conditioner → Fresh Vegetables, Mouthwash → Fresh Fruit, Home Magazines → Fresh Vegetables and Paper Wipes → Fresh Fruit. It’s as though the Deluxe shopper treats each basket as both a self-care ritual and a gourmet snack run—mixing shampoo with salad greens, magazines with vegetables, and personal hygiene with produce in ways the global analysis only hinted at. This could be explain by the Deluxe stores design and item-positioning.</p>
-<p>In the Gourmet boutiques (sup ≥ 1.0%, conf ≥ 10%, lift ≥ 1.20), by contrast, non-food items drop away entirely. The story becomes pure culinary choreography: Fresh Fruit ↔ Wine, Cheese ↔ Soup, Pizza → Fresh Fruit, Jelly → Fresh Vegetables. Here the basket is a chef’s sketchpad—artisanal preserves, premium produce, curated pantry staples—untarnished by toothpaste or cleaners.</p>
-<p>Bottom line: the all-stores rules sketch the franchise-wide backbone of grocery behavior—produce paired with meals, occasional personal-care cross-overs. Deluxe builds on that backbone by weaving in lifestyle and home-care purchases, yielding hybrid “self-care + salad” rules. Gourmet, in turn, strips away the non-food notes and amplifies the core food-to-food harmonies, revealing a laser-focused, premium-only shopping mission.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Write text in cells like this</p>
+<h4 id="2.1.5.2-Global-vs-Local-(Deluxe-and-Gourmet)">2.1.5.2 Global vs Local (Deluxe and Gourmet)<a class="anchor-link" href="#2.1.5.2-Global-vs-Local-(Deluxe-and-Gourmet)">¶</a></h4><p>Segmenting the data clearly alters both the number and the flavour of the patterns, even when top frequent items remain similar in either datasets.</p>
+<p>At the global level we required a very low support (0.3-0.5%) to capture long‑tail items, yielding around 800 frequent itemsets and 22 medium lift rules nearly all variations on the staple trio Fresh Vegetables, Fresh Fruit and Soup.</p>
+<p>After splitting by format the same staples still dominate, but smaller sample sizes let us raise support to 0.5 % (Deluxe) and 1 % (Gourmet). After controlling for confidence and lift:</p>
+<ul>
+<li><p>Deluxe extends the produce backbone into household and personal‑care aisles (Conditioner → Fresh Vegetables, Mouthwash → Fresh Fruit), reflecting a broad top‑up mission.</p>
+</li>
+<li><p>Gourmet keeps the basket strictly culinary; high‑margin items pair with fresh food (Wine ⇆ Fresh Fruit, Pizza → Fresh Fruit), and non‑food triggers disappear.</p>
+</li>
+</ul>
+<p>Overall, it's clear how aggregating all stores masks signal: it inflates the apparent strength of staple-driven rules that collapse once supports are recalculated per format, and it buries niche affinities—such as that only clear the support bar in Gourmet.
+After segmentation those inflated rules vanish, while the newly exposed links show markedly higher confidence, confirming that analysing semantically coherent subsets not only recovers hidden patterns but also boosts precision by stripping away some cross‑format noise.</p>
 </div>
 </div>
 </div>
@@ -22867,7 +22860,7 @@ if (outputEl) {{
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [250]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [345]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="s2">"Foodmart_2025_DM.csv"</span>
@@ -22918,7 +22911,7 @@ if (outputEl) {{
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [251]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [346]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">transactions_small</span>  <span class="o">=</span> <span class="n">small_df</span><span class="p">[</span><span class="s1">'items'</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
@@ -22952,7 +22945,7 @@ if (outputEl) {{
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [252]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [347]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">dataset_stats</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
@@ -22995,7 +22988,7 @@ if (outputEl) {{
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [253]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [348]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">binary_small</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
@@ -23026,11 +23019,10 @@ memory usage: 227.0 KB
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [254]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Compute relative frequencies for the small grocery dataset</span>
-<span class="n">rel_small</span> <span class="o">=</span> <span class="p">(</span><span class="n">binary_small</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">binary_small</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">rel_small</span> <span class="o">=</span> <span class="p">(</span><span class="n">binary_small</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">binary_small</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="n">df_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
     <span class="s1">'Item'</span><span class="p">:</span> <span class="n">rel_small</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
@@ -23038,12 +23030,12 @@ memory usage: 227.0 KB
 <span class="p">})</span>
 
 <span class="c1"># Plot the relative frequencies</span>
-<span class="n">top_items</span> <span class="o">=</span> <span class="n">df_counts</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>  <span class="c1"># top 30 items only</span>
+<span class="n">top_items</span> <span class="o">=</span> <span class="n">df_counts</span> <span class="c1"># top 30 items only</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
     <span class="n">top_items</span><span class="p">,</span>
     <span class="n">x</span><span class="o">=</span><span class="s1">'Item'</span><span class="p">,</span>
     <span class="n">y</span><span class="o">=</span><span class="s1">'Relative Frequency (%)'</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s1">'Top 30 Items by Transaction Frequency'</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s1">'Items by Transaction Frequency'</span><span class="p">,</span>
     <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s1">'Item'</span><span class="p">:</span> <span class="s1">'Product'</span><span class="p">,</span> <span class="s1">'Relative Frequency (%)'</span><span class="p">:</span> <span class="s1">'Percentage of Transactions'</span><span class="p">}</span>
 <span class="p">)</span>
 
@@ -23065,9 +23057,9 @@ memory usage: 227.0 KB
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<div> <div class="plotly-graph-div" id="562e6c8c-fab1-45f5-9f0e-c8bc4079cd3b" style="height:700px; width:100%;"></div> <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("562e6c8c-fab1-45f5-9f0e-c8bc4079cd3b")) {                    Plotly.newPlot(                        "562e6c8c-fab1-45f5-9f0e-c8bc4079cd3b",                        [{"alignmentgroup":"True","hovertemplate":"Product=%{x}\u003cbr\u003ePercentage of Transactions=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"","offsetgroup":"","orientation":"v","showlegend":false,"textposition":"auto","x":["Fresh Vegetables","Fresh Fruit","Cheese","Soup","Dried Fruit","Cookies","Wine","Canned Vegetables","Paper Wipes","Chocolate Candy","Nuts","Frozen Vegetables","Chips","Eggs","Preserves","Milk","Soda","Lightbulbs","Muffins","Deli Meats","Dips","Cereal","Waffles","Sliced Bread","Popsicles","Personal Hygiene","Pizza","Juice","Batteries","Jam"],"xaxis":"x","y":[28.665496049165935,17.866549604916592,11.984196663740123,11.984196663740123,10.79894644424934,10.755048287971904,8.867427568042142,8.208955223880597,7.813871817383671,7.243195785776997,6.760316066725197,6.672519754170326,6.628621597892889,6.409130816505707,6.409130816505707,6.2335381913959615,6.057945566286216,5.7945566286215975,5.750658472344162,5.706760316066725,5.618964003511852,5.5750658472344155,5.39947322212467,5.3116769095697975,5.267778753292362,5.223880597014925,5.223880597014925,5.04828797190518,4.960491659350307,4.872695346795434],"yaxis":"y","type":"bar"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Product"},"tickangle":-45},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Percentage of Transactions"}},"legend":{"tracegroupgap":0},"title":{"text":"Top 30 Items by Transaction Frequency"},"barmode":"relative","margin":{"l":50,"r":50,"t":60,"b":150},"height":700},                        {"responsive": true}                    ).then(function(){
+<div> <div class="plotly-graph-div" id="f380836b-5bd8-40d6-b8e5-04b651b98bca" style="height:700px; width:100%;"></div> <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("f380836b-5bd8-40d6-b8e5-04b651b98bca")) {                    Plotly.newPlot(                        "f380836b-5bd8-40d6-b8e5-04b651b98bca",                        [{"alignmentgroup":"True","hovertemplate":"Product=%{x}\u003cbr\u003ePercentage of Transactions=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"","offsetgroup":"","orientation":"v","showlegend":false,"textposition":"auto","x":["Fresh Vegetables","Fresh Fruit","Cheese","Soup","Dried Fruit","Cookies","Wine","Canned Vegetables","Paper Wipes","Chocolate Candy","Nuts","Frozen Vegetables","Chips","Eggs","Preserves","Milk","Soda","Lightbulbs","Muffins","Deli Meats","Dips","Cereal","Waffles","Sliced Bread","Popsicles","Personal Hygiene","Pizza","Juice","Batteries","Jam","Cooking Oil","Coffee","Hot Dogs","Pasta","Peanut Butter","Popcorn","TV Dinner","Bologna","Frozen Chicken","Ice Cream","Flavored Drinks","Deli Salads","Cleaners","Spices","Plastic Utensils","Jelly","Donuts","French Fries","Shampoo","Mouthwash","Cottage Cheese","Sour Cream","Nasal Sprays","Yogurt","Rice","Crackers","Sugar","Cold Remedies","Hard Candy","Hamburger","Paper Dishes","Tools","Aspirin","Pot Cleaners","Canned Fruit","Tuna","Beer","Sports Magazines","Fresh Chicken","Oysters","Tofu","Sponges","Acetominifen","Toilet Brushes","Pancakes","Dried Meat","Candles","Fashion Magazines","Sunglasses","Home Magazines","Ibuprofen","Sardines","Sauces","Pots and Pans","Shellfish","Screwdrivers","Pretzels","Bagels","Gum","Clams","Computer Magazines","Toothbrushes","Anchovies","Fresh Fish","Auto Magazines","Deodorizers","Pancake Mix","Chocolate","Pot Scrubbers","Shrimp","Maps","Conditioner"],"xaxis":"x","y":[28.665496049165935,17.866549604916592,11.984196663740123,11.984196663740123,10.79894644424934,10.755048287971904,8.867427568042142,8.208955223880597,7.813871817383671,7.243195785776997,6.760316066725197,6.672519754170326,6.628621597892889,6.409130816505707,6.409130816505707,6.2335381913959615,6.057945566286216,5.7945566286215975,5.750658472344162,5.706760316066725,5.618964003511852,5.5750658472344155,5.39947322212467,5.3116769095697975,5.267778753292362,5.223880597014925,5.223880597014925,5.04828797190518,4.960491659350307,4.872695346795434,4.872695346795434,4.872695346795434,4.8287971905179985,4.741000877963126,4.697102721685689,4.56540825285338,4.433713784021071,4.345917471466199,4.258121158911326,4.214223002633889,4.170324846356453,4.038630377524144,3.8191395961369627,3.6435469710272166,3.6435469710272166,3.5996488147497807,3.511852502194908,3.3801580333625987,3.3801580333625987,3.336259877085163,3.2484635645302897,3.160667251975417,3.028972783143108,3.028972783143108,2.9850746268656714,2.941176470588235,2.8972783143107987,2.8972783143107987,2.809482001755926,2.809482001755926,2.633889376646181,2.633889376646181,2.4582967515364356,2.4143985952589992,2.370500438981563,2.370500438981563,2.2388059701492535,1.9754170324846356,1.7120280948200177,1.7120280948200177,1.6242317822651449,1.5803336259877085,1.5364354697102722,1.4925373134328357,1.4925373134328357,1.404741000877963,1.404741000877963,1.404741000877963,1.3608428446005267,1.3608428446005267,1.3608428446005267,1.3169446883230904,1.3169446883230904,1.3169446883230904,1.273046532045654,1.273046532045654,1.273046532045654,1.2291483757682178,1.1852502194907815,1.1852502194907815,1.1852502194907815,1.1852502194907815,1.141352063213345,1.141352063213345,1.0974539069359086,1.0974539069359086,1.0535557506584723,1.009657594381036,0.9218612818261633,0.9218612818261633,0.877963125548727,0.7901668129938543],"yaxis":"y","type":"bar"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Product"},"tickangle":-45},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Percentage of Transactions"}},"legend":{"tracegroupgap":0},"title":{"text":"Items by Transaction Frequency"},"barmode":"relative","margin":{"l":50,"r":50,"t":60,"b":150},"height":700},                        {"responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('562e6c8c-fab1-45f5-9f0e-c8bc4079cd3b');
+var gd = document.getElementById('f380836b-5bd8-40d6-b8e5-04b651b98bca');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -23154,7 +23146,7 @@ if (outputEl) {{
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [255]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">support_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.0009</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.001</span><span class="p">)</span>
@@ -23167,7 +23159,6 @@ if (outputEl) {{
     <span class="s1">'Support (%)'</span><span class="p">:</span> <span class="p">(</span><span class="n">support_vals</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
     <span class="s1">'NumItemsets'</span><span class="p">:</span> <span class="n">counts_small</span>
 <span class="p">})</span>
-
 <span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
     <span class="n">df_plot</span><span class="p">,</span>
     <span class="n">x</span><span class="o">=</span><span class="s1">'Support (%)'</span><span class="p">,</span>
@@ -23176,7 +23167,6 @@ if (outputEl) {{
     <span class="n">title</span><span class="o">=</span><span class="s1">'Frequent Itemsets vs Min Support (FP-Growth) for Small Groceries'</span><span class="p">,</span>
     <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s1">'Support (%)'</span><span class="p">:</span> <span class="s1">'Minimum Support (%)'</span><span class="p">,</span> <span class="s1">'NumItemsets'</span><span class="p">:</span> <span class="s1">'Number of Frequent Itemsets'</span><span class="p">}</span>
 <span class="p">)</span>
-
 <span class="n">fig</span><span class="o">.</span><span class="n">update_xaxes</span><span class="p">()</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">update_layout</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">showlegend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -25187,17 +25177,6 @@ if (outputEl) {{
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Write text in cells like this</p>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Since we have the relatively very high 'head' of our distribution of frequencies, let's do as previously and check the rules without Fresh Fruits and Fresh Vegetables, the top 2 frequency items.</p>
 </div>
 </div>
@@ -25218,12 +25197,11 @@ if (outputEl) {{
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [270]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">exclude_items</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Fresh Fruit'</span><span class="p">,</span> <span class="s1">'Fresh Vegetables'</span><span class="p">}</span>
 
-<span class="c1"># For support ≥ 0.008 (0.8%)</span>
 <span class="n">filtered_rules_08</span> <span class="o">=</span> <span class="n">strong_rules_08</span><span class="p">[</span>
     <span class="o">~</span><span class="n">strong_rules_08</span><span class="p">[</span><span class="s1">'antecedents'</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span><span class="n">item</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">exclude_items</span><span class="p">))</span> <span class="o">&amp;</span>
     <span class="o">~</span><span class="n">strong_rules_08</span><span class="p">[</span><span class="s1">'consequents'</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">any</span><span class="p">(</span><span class="n">item</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">exclude_items</span><span class="p">))</span>
@@ -25539,44 +25517,10 @@ After filtering, 2 rules remain (from original 7 at 1.5% support).
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [273]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="sd">"""</span>
-<span class="sd">* ``binary_small`` must be a pandas DataFrame whose columns are item names and</span>
-<span class="sd">  whose rows are transactions, with 1/0 (or True/False) entries marking item</span>
-<span class="sd">  presence.</span>
-<span class="sd">* Adjust ``min_support`` and ``min_conf`` as appropriate for your dataset size.</span>
-<span class="sd">* The script first mines **all** frequent itemsets via Apriori, then filters</span>
-<span class="sd">  them down to the **maximal** ones (no proper superset is also frequent).</span>
-<span class="sd">* Finally it generates standard association rules and shows how to keep only</span>
-<span class="sd">  those whose full itemset (antecedent ∪ consequent) is one of the maximal</span>
-<span class="sd">  patterns if desired.</span>
-<span class="sd">"""</span>
-
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">mlxtend.frequent_patterns</span> <span class="kn">import</span> <span class="n">apriori</span><span class="p">,</span> <span class="n">association_rules</span>
-
-<span class="c1"># -----------------------------------------------------------------------------</span>
-<span class="c1"># 1. Load or define your dataset</span>
-<span class="c1"># -----------------------------------------------------------------------------</span>
-<span class="c1"># binary_small = pd.read_csv("binary_small.csv")</span>
-<span class="c1"># OR if you're in a notebook it may already be in memory:</span>
-<span class="c1"># from your_preprocessing_module import binary_small</span>
-
-<span class="c1"># For demonstration here we raise an error if the name is missing so the user</span>
-<span class="c1"># is reminded to supply the DataFrame.</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">binary_small</span>  <span class="c1"># noqa: F821  # type: ignore</span>
-<span class="k">except</span> <span class="ne">NameError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span>
-        <span class="s2">"`binary_small` DataFrame is not defined. Load or create it before running."</span>  <span class="c1"># noqa: E501</span>
-    <span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
-
-<span class="c1"># -----------------------------------------------------------------------------</span>
-<span class="c1"># 2. Mine **all** frequent itemsets with Apriori</span>
-<span class="c1"># -----------------------------------------------------------------------------</span>
-<span class="n">min_support</span> <span class="o">=</span> <span class="mf">0.01</span>        <span class="c1"># pick a sensible threshold for your data size</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">min_support</span> <span class="o">=</span> <span class="mf">0.01</span>
 <span class="n">frequent_itemsets</span> <span class="o">=</span> <span class="n">apriori</span><span class="p">(</span>
     <span class="n">binary_small</span><span class="p">,</span>
     <span class="n">min_support</span><span class="o">=</span><span class="n">min_support</span><span class="p">,</span>
@@ -25584,13 +25528,7 @@ After filtering, 2 rules remain (from original 7 at 1.5% support).
     <span class="n">low_memory</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="c1"># -----------------------------------------------------------------------------</span>
-<span class="c1"># 3. Extract **maximal** frequent itemsets</span>
-<span class="c1"># -----------------------------------------------------------------------------</span>
-<span class="c1"># A frequent itemset is maximal if no proper superset of it is also frequent.</span>
-
 <span class="k">def</span> <span class="nf">is_subset_of_any</span><span class="p">(</span><span class="n">candidate</span><span class="p">,</span> <span class="n">itemsets</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Return True if *candidate* is a strict subset of *any* set in *itemsets*."""</span>
     <span class="k">return</span> <span class="nb">any</span><span class="p">((</span><span class="n">candidate</span> <span class="o">&lt;</span> <span class="n">other</span><span class="p">)</span> <span class="k">for</span> <span class="n">other</span> <span class="ow">in</span> <span class="n">itemsets</span> <span class="k">if</span> <span class="n">candidate</span> <span class="o">!=</span> <span class="n">other</span><span class="p">)</span>
 
 <span class="n">maximal_mask</span> <span class="o">=</span> <span class="o">~</span><span class="n">frequent_itemsets</span><span class="p">[</span><span class="s2">"itemsets"</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
@@ -25598,11 +25536,8 @@ After filtering, 2 rules remain (from original 7 at 1.5% support).
 <span class="p">)</span>
 <span class="n">maximal_itemsets</span> <span class="o">=</span> <span class="n">frequent_itemsets</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">maximal_mask</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># -----------------------------------------------------------------------------</span>
-<span class="c1"># 4. Generate association rules</span>
-<span class="c1"># -----------------------------------------------------------------------------</span>
-<span class="n">min_conf</span> <span class="o">=</span> <span class="mf">0.10</span>            <span class="c1"># confidence threshold</span>
-<span class="n">min_lift</span> <span class="o">=</span> <span class="mf">1.20</span>           <span class="c1"># lift threshold</span>
+<span class="n">min_conf</span> <span class="o">=</span> <span class="mf">0.10</span>
+<span class="n">min_lift</span> <span class="o">=</span> <span class="mf">1.20</span>
 <span class="n">rules</span> <span class="o">=</span> <span class="n">association_rules</span><span class="p">(</span>
     <span class="n">frequent_itemsets</span><span class="p">,</span>
     <span class="n">metric</span><span class="o">=</span><span class="s2">"confidence"</span><span class="p">,</span>
@@ -25612,33 +25547,26 @@ After filtering, 2 rules remain (from original 7 at 1.5% support).
 <span class="n">strong_rules</span><span class="p">[</span><span class="s1">'count'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">strong_rules</span><span class="p">[</span><span class="s1">'support'</span><span class="p">]</span> <span class="o">*</span> <span class="n">binary_small</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 <span class="n">strong_rules</span> <span class="o">=</span> <span class="n">strong_rules</span><span class="o">.</span><span class="n">sort_values</span><span class="p">([</span><span class="s1">'lift'</span><span class="p">,</span><span class="s1">'confidence'</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-<span class="c1"># -----------------------------------------------------------------------------</span>
-<span class="c1"># 5. (Option A) Use **all** rules</span>
-<span class="c1"># -----------------------------------------------------------------------------</span>
 <span class="n">all_rules</span> <span class="o">=</span> <span class="n">strong_rules</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"lift"</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># -----------------------------------------------------------------------------</span>
-<span class="c1"># 6. (Option B) Keep only rules whose full itemset is maximal</span>
-<span class="c1"># -----------------------------------------------------------------------------</span>
 <span class="n">maximal_sets</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">maximal_itemsets</span><span class="p">[</span><span class="s2">"itemsets"</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">frozenset</span><span class="p">))</span>
 <span class="n">rules_maximal</span> <span class="o">=</span> <span class="n">rules</span><span class="p">[</span>
     <span class="n">rules</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">"antecedents"</span><span class="p">]</span> <span class="o">|</span> <span class="n">r</span><span class="p">[</span><span class="s2">"consequents"</span><span class="p">])</span> <span class="ow">in</span> <span class="n">maximal_sets</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"lift"</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-<span class="c1"># -----------------------------------------------------------------------------</span>
-<span class="c1"># 7. Display or save results</span>
-<span class="c1"># -----------------------------------------------------------------------------</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== Maximal frequent itemsets ==="</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">maximal_itemsets</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"support"</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== Association rules (all) ==="</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">all_rules</span><span class="p">[[</span><span class="s1">'antecedents'</span><span class="p">,</span> <span class="s1">'consequents'</span><span class="p">,</span> <span class="s1">'antecedent support'</span><span class="p">,</span> <span class="s1">'consequent support'</span><span class="p">,</span>
-    <span class="s1">'support'</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">,</span>
-    <span class="s1">'confidence'</span><span class="p">,</span> <span class="s1">'lift'</span><span class="p">,</span>
-    <span class="s1">'leverage'</span><span class="p">,</span> <span class="s1">'conviction'</span><span class="p">]])</span>
+<span class="n">display</span><span class="p">(</span><span class="n">all_rules</span><span class="p">[[</span>
+    <span class="s1">'antecedents'</span><span class="p">,</span> <span class="s1">'consequents'</span><span class="p">,</span> <span class="s1">'antecedent support'</span><span class="p">,</span> <span class="s1">'consequent support'</span><span class="p">,</span>
+    <span class="s1">'support'</span><span class="p">,</span> <span class="s1">'count'</span><span class="p">,</span> <span class="s1">'confidence'</span><span class="p">,</span> <span class="s1">'lift'</span><span class="p">,</span> <span class="s1">'leverage'</span><span class="p">,</span> <span class="s1">'conviction'</span>
+<span class="p">]])</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== Association rules where antecedent u consequent is maximal ==="</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">rules_maximal</span><span class="p">[[</span><span class="s2">"antecedents"</span><span class="p">,</span> <span class="s2">"consequents"</span><span class="p">,</span> <span class="s2">"support"</span><span class="p">,</span> <span class="s2">"confidence"</span><span class="p">,</span> <span class="s2">"lift"</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== Association rules where antecedent ∪ consequent is maximal ==="</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">rules_maximal</span><span class="p">[[</span>
+    <span class="s2">"antecedents"</span><span class="p">,</span> <span class="s2">"consequents"</span><span class="p">,</span> <span class="s2">"support"</span><span class="p">,</span> <span class="s2">"confidence"</span><span class="p">,</span> <span class="s2">"lift"</span>
+<span class="p">]])</span>
 </pre></div>
 </div>
 </div>
@@ -26193,17 +26121,6 @@ After filtering, 2 rules remain (from original 7 at 1.5% support).
 <p>93 rows × 5 columns</p>
 </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Write text in cells like this</p>
 </div>
 </div>
 </div>
